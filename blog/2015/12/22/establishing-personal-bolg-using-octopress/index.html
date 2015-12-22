@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Runge Zhai's Blog</title>
+  <title>Establishing Personal Bolg Using Octopress - Runge Zhai's Blog</title>
   <meta name="author" content="Runge Zhai">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://rungezhai.github.io/">
+  <link rel="canonical" href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Runge Zhai's Blog" type="application/atom+xml">
@@ -63,15 +63,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/">Establishing Personal Bolg Using Octopress</a></h1>
+      <h1 class="entry-title">Establishing Personal Bolg Using Octopress</h1>
     
     
       <p class="meta">
@@ -87,7 +84,7 @@
   </header>
 
 
-  <div class="entry-content"><p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
+<div class="entry-content"><p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
 
 <p>首先说明, 本文的环境是Mac OSX.</p>
 
@@ -418,350 +415,52 @@
 <a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html</a>
 <a href="http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll">http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll</a></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Runge Zhai</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-22T21:40:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:40 pm</span></time>
+      
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/">Build My Own Blog Using GitHub Pages and Jekyll</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-12-21T21:50:38+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>9:50 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天终于使用 GitHub Pages 和 Jekyll 搭建起了自己的博客, 本来一直想自己租个服务器用 WordPress 自己搭建一个个人博客网站, 但是一直没有行动, 一拖再拖. 最后发现本末倒置了, 工具不重要, 最主要的是想积累一些自己的东西, 有自己的一点空间, 分享自己的想法, 如果能帮助别人, 那就最好不过了.</p>
-
-<p>所以今天抽出时间先把整个环境搭起来, 先保证其可用性, 至于其他的, 比如美观什么的, 那是以后慢慢优化的事了.</p>
-
-<p>本来准备用 Octopress, 但是根据文档一步一步配置, 发现过程太复杂. 我还是更喜欢直接用 Jekyll, 用 Jekyll 搭建博客甚至不需要在本地安装任何额外的程序, 因为 GitHub 本就支持 Jekyll, 所以只要按照 Jekyll 的要求组织文件, 然后 push 到 GitHub 上就行了. 当然这有一个问题, 就是 GitHub 发布有延时, 所以 push 成功后需要等一段时间才能看到更新, 这样就不好调试了, 所以最好是在本机也装一个 Jekyll, 在本机调试好以后再提交到 GitHub. 只要本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 那本地的结果和服务器的结果就是一样的.</p>
-
-<h2>新建Repository</h2>
-
-<p>在 GitHub 网站为 Blog 新建 Repository, 我这里取名 blog. 详细不再说了, 我这个新建的 Repository 的链接是</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>https://github.com/RungeZhai/blog.git</span></code></pre></td></tr></table></div></figure>
-
-
-<p>后面会用到.</p>
-
-<p>在本机新建文件夹并进入该文件夹</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir blog
-</span><span class='line'><span class="nb">cd </span>blog
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>初始化 git 并关联上面新建的 Repository</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git init
-</span><span class='line'>git remote add origin https://github.com/RungeZhai/blog.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>新建 gh-pages 分支, 因为 GitHub 规定, 只有该分支中的页面, 才会自动生成网页文件</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout --orphan branch gh-pages
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>新建一个 index.html 文件, 并输入内容</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span><span class='line'><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">“en-ca”</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;</span>
-</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">“utf-8”</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;title&gt;</span>Hello, World!<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'><span class="nt">&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'><span class="nt">&lt;h1&gt;</span>H1<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>提交修改</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s1">&#39;add index.html&#39;</span>
-</span><span class='line'>git push -u origin gh-pages
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>此时在浏览器中输入如下格式的链接</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;GitHub Username&gt;.github.io/&lt;Repository Name&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>我这里是rungezhai.github.io/blog. 应该会看到一个空白页, 而不会看到 Hello, World!. 因为上面说了, GitHub 发布需要时间, 只要没报错, 说明到目前为止一切正常. 我等了足足两个小时才看到久违的 Hello, World!.</p>
-
-<h2>增加 Jekyll 所需的文件</h2>
-
-<p>Jekyll 的目录结构是下面这样的:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>.
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _config.yml
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _includes
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- head.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _layouts
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- page.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- post.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _posts
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- 2015-09-23-blog.md
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _site
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--CNAME
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--index.html
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- index.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>新建 _config.yml</h3>
-
-<p><code>_config.yml</code>是 Jekyll 的配置文件, 这里新增如下两行内容</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>markdown: redcarpet
-</span><span class='line'>baseurl: /blog
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>特别注意格式, 冒号后面要有空格. 第一行, redcarpet 是 GitHub 的 markdown 解析器. 第二行, baseurl 是 上面提到的链接格式处显示的文字, 默认是 repository 的名字.</p>
-
-<h3>_layout</h3>
-
-<p>该目录用来存放模板文件, 在该目录下新建 default.html 文件, 内容如下:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;!DOCTYPE html&gt;
-</span><span class='line'>&lt;html&gt;
-</span><span class='line'>&lt;head&gt;
-</span><span class='line'>　　&lt;meta http-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span> /&gt;
-</span><span class='line'>　　&lt;title&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/title&gt;
-</span><span class='line'>&lt;/head&gt;
-</span><span class='line'>&lt;body&gt;
-</span><span class='line'>
-</span><span class='line'>　　<span class="o">{{</span> content <span class="o">}}</span>
-</span><span class='line'>
-</span><span class='line'>&lt;/body&gt;
-</span><span class='line'>&lt;/html&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。</p>
-
-<h3>创建文章</h3>
-
-<p>新建目录_posts, 进入该目录, 创建第一篇文章. 文章就是普通的文本文件, 文件名假定为2012-08-25-hello-world.html. 注意, 文件名必须为"年-月-日-文章标题.后缀名"的格式. 如果网页代码采用 html 格式, 后缀名为 html; 如果采用 markdown 格式, 后缀名为md. 在该文件中输入以下内容</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
-</span><span class='line'>layout: default
-</span><span class='line'>title: 你好，世界
-</span><span class='line'>---
-</span><span class='line'>&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
-</span><span class='line'>&lt;p&gt;我的第一篇文章&lt;/p&gt;
-</span><span class='line'>&lt;p&gt;<span class="o">{{</span> page.date <span class="p">|</span> date_to_string <span class="o">}}</span>&lt;/p&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线"—", 标记开始和结束, 里面每一行设置一种元数据. &ldquo;layout: default"，表示该文章的模板使用 _layouts 目录下的 default.html 文件; "title: 你好, 世界”, 表示该文章的标题是"你好, 世界"，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即"hello world"。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, &rdquo;| date_to_string"表示将 page.date 变量转化成人类可读的格式。</p>
-
-<h3>首页</h3>
-
-<p>首页就是我们上面新建的 index.html, 现在把它修改成如下:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
-</span><span class='line'>layout: default
-</span><span class='line'>title: 我的Blog
-</span><span class='line'>---
-</span><span class='line'>
-</span><span class='line'>&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
-</span><span class='line'>&lt;p&gt;最新文章&lt;/p&gt;
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>　　<span class="o">{</span>% <span class="k">for</span> post in site.posts %<span class="o">}</span>
-</span><span class='line'>　　　　&lt;li&gt;<span class="o">{{</span> post.date <span class="p">|</span> date_to_string <span class="o">}}</span> &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;{{ site.baseurl }}{{ post.url }}&quot;</span>&gt;<span class="o">{{</span> post.title <span class="o">}}</span>&lt;/a&gt;&lt;/li&gt;
-</span><span class='line'>　　<span class="o">{</span>% endfor %<span class="o">}</span>
-</span><span class='line'>&lt;/ul&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>它的Yaml文件头表示, 首页使用default模板, 标题为"我的Blog". 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.</p>
-
-<h3>发布</h3>
-
-<p>上面已经提到了, 其实就是提交</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s1">&#39;Init Jekyll&#39;</span>
-</span><span class='line'>git push -u origin gh-pages
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后在浏览器里输入上面提到的链接, 就可以看到自己的博客了!!! 呃… 还是"Hello, World!“? 可能需要时间, 耐心等几分钟.</p>
-
-<h2>安装 Jekyll</h2>
-
-<p>为了本机立即查看效果, 我们需要在本机安装Jekyll. 为了保证本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 我们直接使用 GitHub 的 Jekyll:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem install github-pages
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后进入上文的Repository目录, 执行下面的命令:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jekyll serve --watch --baseurl <span class="s2">&quot;&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>应该会看到类似下面的提示:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Configuration file: .../blog/_config.yml
-</span><span class='line'>Source: .../blog
-</span><span class='line'>Destination: .../blog/_site
-</span><span class='line'>Generating...
-</span><span class='line'><span class="k">done</span>.
-</span><span class='line'>Auto-regeneration: enabled <span class="k">for</span> <span class="s1">&#39;.../blog&#39;</span>
-</span><span class='line'>Configuration file: .../blog/_config.yml
-</span><span class='line'>Server address: http://127.0.0.1:4000/
-</span><span class='line'>Server running... press ctrl-c to stop.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在浏览器中输入 <a href="http://127.0.0.1:4000/">http://127.0.0.1:4000/</a> 就可以看到我们的成果了.</p>
-
-<p>注: 文中部分内容抄袭的阮一峰大神的, <a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">附上链接</a></p>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/" data-via="" data-counturl="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/" title="Previous Post: Build My Own Blog Using GitHub Pages and Jekyll">&laquo; Build My Own Blog Using GitHub Pages and Jekyll</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -786,6 +485,7 @@
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -800,7 +500,10 @@
       var disqus_shortname = 'rungezhaigithubblog';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/';
+        var disqus_url = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
