@@ -4,7 +4,7 @@
   <title><![CDATA[Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-22T23:13:18+08:00</updated>
+  <updated>2015-12-22T23:31:07+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -18,7 +18,7 @@
     <link href="http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a/"/>
     <updated>2015-12-22T22:36:52+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a</id>
-    <content type="html"><![CDATA[<p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置的总结.</p>
+    <content type="html"><![CDATA[<p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置的总结. 会一直持续更新.</p>
 
 <!--more-->
 
