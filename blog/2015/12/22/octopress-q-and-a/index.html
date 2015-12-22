@@ -9,7 +9,7 @@
   <meta name="author" content="Runge Zhai">
 
   
-  <meta name="description" content="关于Octopress的配置在http://shengmingzhiqing.com/中有详细的教程, 这里我只是做一些很必要的配置的总结. 文章在首页显示摘要 一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入&lt;!--more &hellip;">
+  <meta name="description" content="关于Octopress的配置在这个博客中有详细的教程, 这里我只是做一些很必要的配置的总结. 文章在首页显示摘要 一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入&lt;!--more--&gt;. Markdown文件拓展名修改 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,7 +84,7 @@
   </header>
 
 
-<div class="entry-content"><p>关于Octopress的配置在http://shengmingzhiqing.com/中有详细的教程, 这里我只是做一些很必要的配置的总结.</p>
+<div class="entry-content"><p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置的总结.</p>
 
 <!--more-->
 
@@ -117,7 +117,7 @@
 
 <p>然后在Terminal执行<code>bundle install</code>安装这个依赖项(很可能已经安装过了).</p>
 
-<p>再打开<code>_config.yml</code>, 找到<code>markdown: rdiscount</code>, 将其中的<code>rdiscout</code>改成<code>kramdown</code>. 并将下面的删除或注释掉(前面加<code>#</code>).</p>
+<p>再打开<code>_config.yml</code>, 找到<code>markdown: rdiscount</code>, 将其中的<code>rdiscout</code>改成<code>kramdown</code>. 并将下面的删除或注释掉(yml文件的行注释是前面加<code>#</code>).</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -195,6 +195,35 @@
       </li>
     
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/RungeZhai">@RungeZhai</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'RungeZhai',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
