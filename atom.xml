@@ -4,7 +4,7 @@
   <title><![CDATA[Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-22T22:26:10+08:00</updated>
+  <updated>2015-12-22T22:56:47+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress Q&amp;A]]></title>
+    <link href="http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a/"/>
+    <updated>2015-12-22T22:36:52+08:00</updated>
+    <id>http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a</id>
+    <content type="html"><![CDATA[<p>关于Octopress的配置在http://shengmingzhiqing.com/中有详细的教程, 这里我只是做一些很必要的配置的总结.</p>
+
+<!--more-->
+
+<p><strong>文章在首页显示摘要</strong></p>
+
+<p>一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入<code>&lt;!--more--&gt;</code>.</p>
+
+<p><strong>Markdown文件拓展名修改</strong></p>
+
+<p>默认的MarkDown文件名是<code>.markdown</code>. 我们想把它改成<code>.md</code>, 这样更简洁. 方法是修改 <code>rakefile</code> 文件, 将下面两行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">new_post_ext    = "markdown"  # default new post file extension when using the new_post task
+</span><span class="line">new_page_ext    = "markdown"  # default new page file extension when using the new_page task</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>替换成</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">new_post_ext    = "md"  # 默认新日志文件后缀
+</span><span class="line">new_page_ext    = "md"  # 默认新页面文件后缀</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><strong>修改默认Markdown解释器</strong></p>
+
+<p>默认的Markdown解释器是<code>rdiscount</code>, 可以把它改成GitHub推荐的<code>kramdown</code>. 打开<code>Gemfile</code>, 在最后新增下面一行</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">gem 'kramdown'</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>然后在Terminal执行<code>bundle install</code>安装这个依赖项(很可能已经安装过了).</p>
+
+<p>再打开<code>_config.yml</code>, 找到<code>markdown: rdiscount</code>, 将其中的<code>rdiscout</code>改成<code>kramdown</code>. 并将下面的删除或注释掉(前面加<code>#</code>).</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rdiscount:
+</span><span class="line">  extensions:
+</span><span class="line">    - autolink
+</span><span class="line">    - footnotes
+</span><span class="line">    - smart</span></code></pre></td></tr></table></div></figure></notextile></div>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Establishing Personal Bolg Using Octopress]]></title>
@@ -22,335 +75,297 @@
 
 <!--More-->
 
-
 <p>首先说明, 本文的环境是Mac OSX.</p>
 
 <p>本来配置过程并不复杂, 就几句命令, 但是其背后是各种依赖, 每一步都是坑, 先贴一下其中用到的Bundle的依赖, 让大家见识一下:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Using rake 10.4.2
-</span><span class='line'>Using RedCloth 4.2.9
-</span><span class='line'>Using blankslate 2.1.2.4
-</span><span class='line'>Using chunky_png 1.3.4
-</span><span class='line'>Using fast-stemmer 1.0.2
-</span><span class='line'>Using classifier-reborn 2.0.3
-</span><span class='line'>Using coffee-script-source 1.9.1.1
-</span><span class='line'>Using execjs 2.6.0
-</span><span class='line'>Using coffee-script 2.4.1
-</span><span class='line'>Using colorator 0.1
-</span><span class='line'>Using multi_json 1.11.2
-</span><span class='line'>Using sass 3.4.18
-</span><span class='line'>Using compass-core 1.0.3
-</span><span class='line'>Using compass-import-once 1.0.5
-</span><span class='line'>Using rb-fsevent 0.9.6
-</span><span class='line'>Using ffi 1.9.10
-</span><span class='line'>Using rb-inotify 0.9.5
-</span><span class='line'>Using compass 1.0.3
-</span><span class='line'>Using tilt 2.0.1
-</span><span class='line'>Using haml 4.0.7
-</span><span class='line'>Using jekyll-coffeescript 1.0.1
-</span><span class='line'>Using jekyll-gist 1.3.4
-</span><span class='line'>Using jekyll-paginate 1.1.0
-</span><span class='line'>Using jekyll-sass-converter 1.3.0
-</span><span class='line'>Using listen 3.0.3
-</span><span class='line'>Using jekyll-watch 1.3.0
-</span><span class='line'>Using kramdown 1.8.0
-</span><span class='line'>Using liquid 2.6.3
-</span><span class='line'>Using mercenary 0.3.5
-</span><span class='line'>Using posix-spawn 0.3.11
-</span><span class='line'>Using yajl-ruby 1.2.1
-</span><span class='line'>Using pygments.rb 0.6.3
-</span><span class='line'>Using redcarpet 3.3.2
-</span><span class='line'>Using safe_yaml 1.0.4
-</span><span class='line'>Using parslet 1.5.0
-</span><span class='line'>Using toml 0.1.2
-</span><span class='line'>Using jekyll 2.5.3
-</span><span class='line'>Using jekyll-sitemap 0.9.0
-</span><span class='line'>Using octopress-hooks 2.6.1
-</span><span class='line'>Using octopress-date-format 2.0.2
-</span><span class='line'>Using rack 1.6.4
-</span><span class='line'>Using rack-protection 1.5.3
-</span><span class='line'>Using rdiscount 2.1.8
-</span><span class='line'>Using sass-globbing 1.0.0
-</span><span class='line'>Using sinatra 1.4.6
-</span><span class='line'>Using stringex 1.4.0
-</span><span class='line'>Using bundler 1.10.6</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+<span class="line-number">35</span>
+<span class="line-number">36</span>
+<span class="line-number">37</span>
+<span class="line-number">38</span>
+<span class="line-number">39</span>
+<span class="line-number">40</span>
+<span class="line-number">41</span>
+<span class="line-number">42</span>
+<span class="line-number">43</span>
+<span class="line-number">44</span>
+<span class="line-number">45</span>
+<span class="line-number">46</span>
+<span class="line-number">47</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Using rake 10.4.2
+</span><span class="line">Using RedCloth 4.2.9
+</span><span class="line">Using blankslate 2.1.2.4
+</span><span class="line">Using chunky_png 1.3.4
+</span><span class="line">Using fast-stemmer 1.0.2
+</span><span class="line">Using classifier-reborn 2.0.3
+</span><span class="line">Using coffee-script-source 1.9.1.1
+</span><span class="line">Using execjs 2.6.0
+</span><span class="line">Using coffee-script 2.4.1
+</span><span class="line">Using colorator 0.1
+</span><span class="line">Using multi_json 1.11.2
+</span><span class="line">Using sass 3.4.18
+</span><span class="line">Using compass-core 1.0.3
+</span><span class="line">Using compass-import-once 1.0.5
+</span><span class="line">Using rb-fsevent 0.9.6
+</span><span class="line">Using ffi 1.9.10
+</span><span class="line">Using rb-inotify 0.9.5
+</span><span class="line">Using compass 1.0.3
+</span><span class="line">Using tilt 2.0.1
+</span><span class="line">Using haml 4.0.7
+</span><span class="line">Using jekyll-coffeescript 1.0.1
+</span><span class="line">Using jekyll-gist 1.3.4
+</span><span class="line">Using jekyll-paginate 1.1.0
+</span><span class="line">Using jekyll-sass-converter 1.3.0
+</span><span class="line">Using listen 3.0.3
+</span><span class="line">Using jekyll-watch 1.3.0
+</span><span class="line">Using kramdown 1.8.0
+</span><span class="line">Using liquid 2.6.3
+</span><span class="line">Using mercenary 0.3.5
+</span><span class="line">Using posix-spawn 0.3.11
+</span><span class="line">Using yajl-ruby 1.2.1
+</span><span class="line">Using pygments.rb 0.6.3
+</span><span class="line">Using redcarpet 3.3.2
+</span><span class="line">Using safe_yaml 1.0.4
+</span><span class="line">Using parslet 1.5.0
+</span><span class="line">Using toml 0.1.2
+</span><span class="line">Using jekyll 2.5.3
+</span><span class="line">Using jekyll-sitemap 0.9.0
+</span><span class="line">Using octopress-hooks 2.6.1
+</span><span class="line">Using octopress-date-format 2.0.2
+</span><span class="line">Using rack 1.6.4
+</span><span class="line">Using rack-protection 1.5.3
+</span><span class="line">Using rdiscount 2.1.8
+</span><span class="line">Using sass-globbing 1.0.0
+</span><span class="line">Using sinatra 1.4.6
+</span><span class="line">Using stringex 1.4.0
+</span><span class="line">Using bundler 1.10.6</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>一屏幕都显示不开有没有!!!</p>
 
-<h3>配置Brew</h3>
+<h3 id="brew">配置Brew</h3>
 
 <ul>
-<li>安装</li>
+  <li>安装</li>
 </ul>
 
-
 <p>HomeBrew 是一个非常有用的软件包管理系统, 一般情况下, Mac机器已经安装过Brew了. 可以使用<code>brew --version</code>查看brew的版本. 如果机器没有安装Brew, 可以运行下面命令安装</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>或者想卸载重装, 运行下面命令卸载</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>按照提示一步一步来即可, 期间可能会遇到<code>Permission denied</code>什么的, 那么就在命令前面加上<code>sudo</code>(super do)再执行一遍喽.</p>
 
 <ul>
-<li>诊断Brew</li>
+  <li>诊断Brew</li>
 </ul>
 
-
-<p>运行<code>brew doctor</code>来检查Brew的状况.
+<p>运行<code>brew doctor</code>来检查Brew的状况. 
 如果出现如<code>Unbrewed *** were found</code>这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
 如果出现<code>Homebrew's sbin was not found in your PATH but you have installed...</code>这种提示, 在命令行运行
 <code>export PATH="/usr/local/sbin:$PATH"</code>.
 总之, 到最后如果完全没有问题的话, 运行<code>brew doctor</code>会出现<code>Your system is ready to brew.</code></p>
 
-<h3>新建Github Repository</h3>
-
+<h3 id="github-repository">新建Github Repository</h3>
 <p>新建一个repository, 命名规则为<code>[your_username].github.io</code>. 把其中的<code>[your_username]</code>换成你自己在Github 上的用户名, 我这里是rungezhai.github.io. 记下这个repository的链接, https或者SSH都可以, 下面会用到.</p>
 
-<h3>本地安装Octopress</h3>
+<h3 id="octopress">本地安装Octopress</h3>
 
 <ul>
-<li>安装Ruby</li>
+  <li>安装Ruby</li>
 </ul>
-
 
 <p>首先使用RVM安装Ruby, Octopress使用的ruby最好是1.9.3版本, Mac10.10以后的版本自带的Ruby版本太高, 最好不要超过2.0.0</p>
 
 <p>执行下面的命令安装RVM</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">curl -L https://get.rvm.io | bash -s stable --ruby</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>执行下面的命令安装ruby</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rvm install 2.0.0
-</span><span class='line'>rvm use 2.0.0
-</span><span class='line'>rvm rubygems latest
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rvm install 2.0.0
+</span><span class="line">rvm use 2.0.0
+</span><span class="line">rvm rubygems latest
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>把Octopress克隆到本地</li>
+  <li>把Octopress克隆到本地</li>
 </ul>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git rungezhai.github.io
-</span><span class='line'>cd rungezhai.github.io</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git clone git://github.com/imathis/octopress.git rungezhai.github.io
+</span><span class="line">cd rungezhai.github.io</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>最后一个参数<code>rungezhai.github.io</code>是克隆到的目录, 我为了命名统一, 克隆到了和Github repository同样名字的目录下.</p>
 
 <p>然后安装所需的依赖项</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo gem install bundler
-</span><span class='line'>bundle install</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">sudo gem install bundler
+</span><span class="line">bundle install</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>期间可能会出现如下类似错误</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>An error occurred while installing tilt (2.0.1), and Bundler
-</span><span class='line'>cannot continue.
-</span><span class='line'>Make sure that `gem install tilt -v '2.0.1'` succeeds before
-</span><span class='line'>bundling.</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">An error occurred while installing tilt (2.0.1), and Bundler
+</span><span class="line">cannot continue.
+</span><span class="line">Make sure that `gem install tilt -v '2.0.1'` succeeds before
+</span><span class="line">bundling.</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>没有办法, 只能根据提示执行相应的命令, 但要在前面加sudo, 以上面为例:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo gem install tilt -v '2.0.1'</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">sudo gem install tilt -v '2.0.1'</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>最后应该会出现如下提示, 说明安装成功:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Bundle complete! 13 Gemfile dependencies, 47 gems now installed.
-</span><span class='line'>Use `bundle show [gemname]` to see where a bundled gem is installed.
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">Bundle complete! 13 Gemfile dependencies, 47 gems now installed.
+</span><span class="line">Use `bundle show [gemname]` to see where a bundled gem is installed.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>安装默认主题</li>
+  <li>安装默认主题</li>
 </ul>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake install</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>本地安装完毕. 顺便说一句, 所谓 rake 就是 ruby make 的缩写.</p>
 
 <ul>
-<li>预览</li>
+  <li>预览</li>
 </ul>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure>
-
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake preview</span></code></pre></td></tr></table></div></figure></notextile></div>
 <p>在浏览器中输入:<code>http://localhost:4000/</code>即可查看网站, 现在应该是一个黑色背景的空白页面. 命令行中按Ctrl+C结束预览.</p>
 
-<h3>发布</h3>
+<h3 id="section">发布</h3>
 
 <ul>
-<li>设置Github pages</li>
+  <li>设置Github pages</li>
 </ul>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake setup_github_pages</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>期间会有一个问句, 把上面记下的那个repository地址复制进去即可.</p>
 
 <ul>
-<li>生成页面并部署</li>
+  <li>生成页面并部署</li>
 </ul>
 
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
-</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake generate
+</span><span class="line">rake deploy</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>上面的命令可以简化为</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake gen_deploy</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake gen_deploy</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>将结果提交到Github</li>
+  <li>将结果提交到Github</li>
 </ul>
-
 
 <p>上面的命令其实已经将结果(_deploy目录下的所有内容)提交到了main分支, 但我们的所有文件按照Octopress要求, 应该提交到source分支上, soure分支已经在上面的命令中在本地新建了, 所以我们只需要提交即可:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
-</span><span class='line'>git commit -m 'comment here'
-</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git add .
+</span><span class="line">git commit -m 'comment here'
+</span><span class="line">git push origin source</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>如果出现提示<code>Updates were rejected because the remote contains work that you do...</code>可以先执行下面的命令再执行上面三条</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git branch --unset-upstream</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">git branch --unset-upstream</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <ul>
-<li>查看最终结果</li>
+  <li>查看最终结果</li>
 </ul>
-
 
 <p>浏览器中地址栏输入<code>http://[your_username].github.io/</code>即可. 如果连接失败, 那可能要等一段时间, Github部署也是需要一段时间的.</p>
 
-<h3>新建文章</h3>
+<h3 id="section-1">新建文章</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["Post Title"]</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">rake new_post["Post Title"]</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p><code>Post Title</code>是想要新建的文章的标题, 运行上面的命令会在 octopress/source/_posts 目录下新增 yyyy-mm-dd-Post-Title.markdown 文件, 默认是使用的markdown, 如果想直接用html的话, 把拓展名改成html即可, 打开文件会发现文件头大致是这种格式:</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---  
-</span><span class='line'>layout: post  
-</span><span class='line'>title: "Post Title"  
-</span><span class='line'>date: yyyy-mm-dd hh:mm:ss  
-</span><span class='line'>comments: true  
-</span><span class='line'>categories: ""  
-</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">---  
+</span><span class="line">layout: post  
+</span><span class="line">title: "Post Title"  
+</span><span class="line">date: yyyy-mm-dd hh:mm:ss  
+</span><span class="line">comments: true  
+</span><span class="line">categories: ""  
+</span><span class="line">---</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>不要删除这段信息, 在下面写自己的文章就行了. 写完之后执行上面的<code>生成页面并部署</code>和<code>将结果提交到Github</code>两步即可.</p>
 
 <p>参考</p>
 
-<p><a href="http://shengmingzhiqing.com/blog/setup-octopress-with-github-pages.html/">http://shengmingzhiqing.com/blog/setup-octopress-with-github-pages.html/</a>
-<a href="https://github.com/imathis/octopress/issues/121">https://github.com/imathis/octopress/issues/121</a>
-<a href="http://stackoverflow.com/questions/12940626/github-error-message-permission-denied-publickey">http://stackoverflow.com/questions/12940626/github-error-message-permission-denied-publickey</a>
-<a href="https://github.com/Homebrew/homebrew/issues/30180">https://github.com/Homebrew/homebrew/issues/30180</a>
-<a href="http://linfan.info/blog/2012/02/25/homebrew-installation-and-usage/">http://linfan.info/blog/2012/02/25/homebrew-installation-and-usage/</a>
-<a href="http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/">http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/</a>
-<a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html</a>
-<a href="http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll">http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll</a></p>
+<p>http://shengmingzhiqing.com/blog/setup-octopress-with-github-pages.html/
+https://github.com/imathis/octopress/issues/121
+http://stackoverflow.com/questions/12940626/github-error-message-permission-denied-publickey
+https://github.com/Homebrew/homebrew/issues/30180
+http://linfan.info/blog/2012/02/25/homebrew-installation-and-usage/
+http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/
+http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
+http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll</p>
 ]]></content>
   </entry>
   
@@ -359,313 +374,305 @@
     <link href="http://rungezhai.github.io/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/"/>
     <updated>2015-12-21T21:50:38+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll</id>
-    <content type="html"><![CDATA[<p>今天终于使用 GitHub Pages 和 Jekyll 搭建起了自己的博客, 本来一直想自己租个服务器用 WordPress 自己搭建一个个人博客网站, 但是一直没有行动, 一拖再拖. 最后发现本末倒置了, 工具不重要, 最主要的是想积累一些自己的东西, 有自己的一点空间, 分享自己的想法, 如果能帮助别人, 那就最好不过了.</p>
+    <content type="html"><![CDATA[
+<p>今天终于使用 GitHub Pages 和 Jekyll 搭建起了自己的博客, 本来一直想自己租个服务器用 WordPress 自己搭建一个个人博客网站, 但是一直没有行动, 一拖再拖. 最后发现本末倒置了, 工具不重要, 最主要的是想积累一些自己的东西, 有自己的一点空间, 分享自己的想法, 如果能帮助别人, 那就最好不过了.</p>
 
 <!--More-->
-
 
 <p>所以今天抽出时间先把整个环境搭起来, 先保证其可用性, 至于其他的, 比如美观什么的, 那是以后慢慢优化的事了.</p>
 
 <p>本来准备用 Octopress, 但是根据文档一步一步配置, 发现过程太复杂. 我还是更喜欢直接用 Jekyll, 用 Jekyll 搭建博客甚至不需要在本地安装任何额外的程序, 因为 GitHub 本就支持 Jekyll, 所以只要按照 Jekyll 的要求组织文件, 然后 push 到 GitHub 上就行了. 当然这有一个问题, 就是 GitHub 发布有延时, 所以 push 成功后需要等一段时间才能看到更新, 这样就不好调试了, 所以最好是在本机也装一个 Jekyll, 在本机调试好以后再提交到 GitHub. 只要本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 那本地的结果和服务器的结果就是一样的.</p>
 
-<h2>新建Repository</h2>
+<h2 id="repository">新建Repository</h2>
 
 <p>在 GitHub 网站为 Blog 新建 Repository, 我这里取名 blog. 详细不再说了, 我这个新建的 Repository 的链接是</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>https://github.com/RungeZhai/blog.git</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">https://github.com/RungeZhai/blog.git</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>后面会用到.</p>
 
 <p>在本机新建文件夹并进入该文件夹</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>mkdir blog
-</span><span class='line'><span class="nb">cd </span>blog
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">mkdir blog
+</span><span class="line"><span class="nb">cd </span>blog
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>初始化 git 并关联上面新建的 Repository</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git init
-</span><span class='line'>git remote add origin https://github.com/RungeZhai/blog.git
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">git init
+</span><span class="line">git remote add origin https://github.com/RungeZhai/blog.git
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>新建 gh-pages 分支, 因为 GitHub 规定, 只有该分支中的页面, 才会自动生成网页文件</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git checkout --orphan branch gh-pages
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">git checkout --orphan branch gh-pages
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>新建一个 index.html 文件, 并输入内容</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span><span class='line'><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">“en-ca”</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;</span>
-</span><span class='line'><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">“utf-8”</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;title&gt;</span>Hello, World!<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'><span class="nt">&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'><span class="nt">&lt;h1&gt;</span>H1<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class="line"><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">“en-ca”</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;head&gt;</span>
+</span><span class="line"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">“utf-8”</span><span class="nt">&gt;</span>
+</span><span class="line"><span class="nt">&lt;title&gt;</span>Hello, World!<span class="nt">&lt;/title&gt;</span>
+</span><span class="line"><span class="nt">&lt;/head&gt;</span>
+</span><span class="line"><span class="nt">&lt;body&gt;</span>
+</span><span class="line"><span class="nt">&lt;h1&gt;</span>H1<span class="nt">&lt;/h1&gt;</span>
+</span><span class="line"><span class="nt">&lt;/body&gt;</span>
+</span><span class="line"><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>提交修改</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s1">&#39;add index.html&#39;</span>
-</span><span class='line'>git push -u origin gh-pages
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">git add .
+</span><span class="line">git commit -m <span class="s1">&#39;add index.html&#39;</span>
+</span><span class="line">git push -u origin gh-pages
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>此时在浏览器中输入如下格式的链接</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;GitHub Username&gt;.github.io/&lt;Repository Name&gt;
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">&lt;GitHub Username&gt;.github.io/&lt;Repository Name&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>我这里是rungezhai.github.io/blog. 应该会看到一个空白页, 而不会看到 Hello, World!. 因为上面说了, GitHub 发布需要时间, 只要没报错, 说明到目前为止一切正常. 我等了足足两个小时才看到久违的 Hello, World!.</p>
 
-<h2>增加 Jekyll 所需的文件</h2>
+<h2 id="jekyll-">增加 Jekyll 所需的文件</h2>
 
 <p>Jekyll 的目录结构是下面这样的:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>.
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _config.yml
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _includes
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- head.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _layouts
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- page.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- post.html
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _posts
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- 2015-09-23-blog.md
-</span><span class='line'><span class="p">|</span>       <span class="p">|</span>-- ...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- _site
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--CNAME
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--index.html
-</span><span class='line'><span class="p">|</span>     <span class="p">|</span>--...
-</span><span class='line'><span class="p">|</span>
-</span><span class='line'><span class="p">|</span>-- index.html
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">.
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- _config.yml
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- _includes
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- head.html
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- ...
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- _layouts
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- page.html
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- post.html
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- ...
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- _posts
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- 2015-09-23-blog.md
+</span><span class="line"><span class="p">|</span>       <span class="p">|</span>-- ...
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- _site
+</span><span class="line"><span class="p">|</span>     <span class="p">|</span>--CNAME
+</span><span class="line"><span class="p">|</span>     <span class="p">|</span>--index.html
+</span><span class="line"><span class="p">|</span>     <span class="p">|</span>--...
+</span><span class="line"><span class="p">|</span>
+</span><span class="line"><span class="p">|</span>-- index.html
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<h3>新建 _config.yml</h3>
+<h3 id="configyml">新建 _config.yml</h3>
 
 <p><code>_config.yml</code>是 Jekyll 的配置文件, 这里新增如下两行内容</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>markdown: redcarpet
-</span><span class='line'>baseurl: /blog
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">markdown: redcarpet
+</span><span class="line">baseurl: /blog
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>特别注意格式, 冒号后面要有空格. 第一行, redcarpet 是 GitHub 的 markdown 解析器. 第二行, baseurl 是 上面提到的链接格式处显示的文字, 默认是 repository 的名字.</p>
 
-<h3>_layout</h3>
+<h3 id="layout">_layout</h3>
 
 <p>该目录用来存放模板文件, 在该目录下新建 default.html 文件, 内容如下:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;!DOCTYPE html&gt;
-</span><span class='line'>&lt;html&gt;
-</span><span class='line'>&lt;head&gt;
-</span><span class='line'>　　&lt;meta http-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span> /&gt;
-</span><span class='line'>　　&lt;title&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/title&gt;
-</span><span class='line'>&lt;/head&gt;
-</span><span class='line'>&lt;body&gt;
-</span><span class='line'>
-</span><span class='line'>　　<span class="o">{{</span> content <span class="o">}}</span>
-</span><span class='line'>
-</span><span class='line'>&lt;/body&gt;
-</span><span class='line'>&lt;/html&gt;
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">&lt;!DOCTYPE html&gt;
+</span><span class="line">&lt;html&gt;
+</span><span class="line">&lt;head&gt;
+</span><span class="line">　　&lt;meta http-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&quot;text/html; charset=utf-8&quot;</span> /&gt;
+</span><span class="line">　　&lt;title&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/title&gt;
+</span><span class="line">&lt;/head&gt;
+</span><span class="line">&lt;body&gt;
+</span><span class="line">
+</span><span class="line">　　<span class="o">{{</span> content <span class="o">}}</span>
+</span><span class="line">
+</span><span class="line">&lt;/body&gt;
+</span><span class="line">&lt;/html&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。</p>
 
-<h3>创建文章</h3>
+<h3 id="section">创建文章</h3>
 
-<p>新建目录_posts, 进入该目录, 创建第一篇文章. 文章就是普通的文本文件, 文件名假定为2012-08-25-hello-world.html. 注意, 文件名必须为"年-月-日-文章标题.后缀名"的格式. 如果网页代码采用 html 格式, 后缀名为 html; 如果采用 markdown 格式, 后缀名为md. 在该文件中输入以下内容</p>
+<p>新建目录_posts, 进入该目录, 创建第一篇文章. 文章就是普通的文本文件, 文件名假定为2012-08-25-hello-world.html. 注意, 文件名必须为”年-月-日-文章标题.后缀名”的格式. 如果网页代码采用 html 格式, 后缀名为 html; 如果采用 markdown 格式, 后缀名为md. 在该文件中输入以下内容</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
-</span><span class='line'>layout: default
-</span><span class='line'>title: 你好，世界
-</span><span class='line'>---
-</span><span class='line'>&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
-</span><span class='line'>&lt;p&gt;我的第一篇文章&lt;/p&gt;
-</span><span class='line'>&lt;p&gt;<span class="o">{{</span> page.date <span class="p">|</span> date_to_string <span class="o">}}</span>&lt;/p&gt;
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">---
+</span><span class="line">layout: default
+</span><span class="line">title: 你好，世界
+</span><span class="line">---
+</span><span class="line">&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
+</span><span class="line">&lt;p&gt;我的第一篇文章&lt;/p&gt;
+</span><span class="line">&lt;p&gt;<span class="o">{{</span> page.date <span class="p">|</span> date_to_string <span class="o">}}</span>&lt;/p&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<table>
+  <tbody>
+    <tr>
+      <td>每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线”—”, 标记开始和结束, 里面每一行设置一种元数据. “layout: default”，表示该文章的模板使用 _layouts 目录下的 default.html 文件; “title: 你好, 世界”, 表示该文章的标题是”你好, 世界”，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即”hello world”。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的”你好，世界”，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, “</td>
+      <td>date_to_string”表示将 page.date 变量转化成人类可读的格式。</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线"—", 标记开始和结束, 里面每一行设置一种元数据. &ldquo;layout: default"，表示该文章的模板使用 _layouts 目录下的 default.html 文件; "title: 你好, 世界”, 表示该文章的标题是"你好, 世界"，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即"hello world"。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, &rdquo;| date_to_string"表示将 page.date 变量转化成人类可读的格式。</p>
-
-<h3>首页</h3>
+<h3 id="section-1">首页</h3>
 
 <p>首页就是我们上面新建的 index.html, 现在把它修改成如下:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>---
-</span><span class='line'>layout: default
-</span><span class='line'>title: 我的Blog
-</span><span class='line'>---
-</span><span class='line'>
-</span><span class='line'>&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
-</span><span class='line'>&lt;p&gt;最新文章&lt;/p&gt;
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>　　<span class="o">{</span>% <span class="k">for</span> post in site.posts %<span class="o">}</span>
-</span><span class='line'>　　　　&lt;li&gt;<span class="o">{{</span> post.date <span class="p">|</span> date_to_string <span class="o">}}</span> &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;{{ site.baseurl }}{{ post.url }}&quot;</span>&gt;<span class="o">{{</span> post.title <span class="o">}}</span>&lt;/a&gt;&lt;/li&gt;
-</span><span class='line'>　　<span class="o">{</span>% endfor %<span class="o">}</span>
-</span><span class='line'>&lt;/ul&gt;
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">---
+</span><span class="line">layout: default
+</span><span class="line">title: 我的Blog
+</span><span class="line">---
+</span><span class="line">
+</span><span class="line">&lt;h2&gt;<span class="o">{{</span> page.title <span class="o">}}</span>&lt;/h2&gt;
+</span><span class="line">&lt;p&gt;最新文章&lt;/p&gt;
+</span><span class="line">&lt;ul&gt;
+</span><span class="line">　　<span class="o">{</span>% <span class="k">for</span> post in site.posts %<span class="o">}</span>
+</span><span class="line">　　　　&lt;li&gt;<span class="o">{{</span> post.date <span class="p">|</span> date_to_string <span class="o">}}</span> &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;{{ site.baseurl }}{{ post.url }}&quot;</span>&gt;<span class="o">{{</span> post.title <span class="o">}}</span>&lt;/a&gt;&lt;/li&gt;
+</span><span class="line">　　<span class="o">{</span>% endfor %<span class="o">}</span>
+</span><span class="line">&lt;/ul&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>它的Yaml文件头表示, 首页使用default模板, 标题为”我的Blog”. 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.</p>
 
-<p>它的Yaml文件头表示, 首页使用default模板, 标题为"我的Blog". 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.</p>
-
-<h3>发布</h3>
+<h3 id="section-2">发布</h3>
 
 <p>上面已经提到了, 其实就是提交</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git add .
-</span><span class='line'>git commit -m <span class="s1">&#39;Init Jekyll&#39;</span>
-</span><span class='line'>git push -u origin gh-pages
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">git add .
+</span><span class="line">git commit -m <span class="s1">&#39;Init Jekyll&#39;</span>
+</span><span class="line">git push -u origin gh-pages
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
+<p>然后在浏览器里输入上面提到的链接, 就可以看到自己的博客了!!! 呃… 还是”Hello, World!“? 可能需要时间, 耐心等几分钟.</p>
 
-<p>然后在浏览器里输入上面提到的链接, 就可以看到自己的博客了!!! 呃… 还是"Hello, World!“? 可能需要时间, 耐心等几分钟.</p>
-
-<h2>安装 Jekyll</h2>
+<h2 id="jekyll">安装 Jekyll</h2>
 
 <p>为了本机立即查看效果, 我们需要在本机安装Jekyll. 为了保证本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 我们直接使用 GitHub 的 Jekyll:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem install github-pages
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">sudo gem install github-pages
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>然后进入上文的Repository目录, 执行下面的命令:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>jekyll serve --watch --baseurl <span class="s2">&quot;&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">jekyll serve --watch --baseurl <span class="s2">&quot;&quot;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>应该会看到类似下面的提示:</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Configuration file: .../blog/_config.yml
-</span><span class='line'>Source: .../blog
-</span><span class='line'>Destination: .../blog/_site
-</span><span class='line'>Generating...
-</span><span class='line'><span class="k">done</span>.
-</span><span class='line'>Auto-regeneration: enabled <span class="k">for</span> <span class="s1">&#39;.../blog&#39;</span>
-</span><span class='line'>Configuration file: .../blog/_config.yml
-</span><span class='line'>Server address: http://127.0.0.1:4000/
-</span><span class='line'>Server running... press ctrl-c to stop.
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">Configuration file: .../blog/_config.yml
+</span><span class="line">Source: .../blog
+</span><span class="line">Destination: .../blog/_site
+</span><span class="line">Generating...
+</span><span class="line"><span class="k">done</span>.
+</span><span class="line">Auto-regeneration: enabled <span class="k">for</span> <span class="s1">&#39;.../blog&#39;</span>
+</span><span class="line">Configuration file: .../blog/_config.yml
+</span><span class="line">Server address: http://127.0.0.1:4000/
+</span><span class="line">Server running... press ctrl-c to stop.
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-
-<p>在浏览器中输入 <a href="http://127.0.0.1:4000/">http://127.0.0.1:4000/</a> 就可以看到我们的成果了.</p>
+<p>在浏览器中输入 http://127.0.0.1:4000/ 就可以看到我们的成果了.</p>
 
 <p>注: 文中部分内容抄袭的阮一峰大神的, <a href="http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html">附上链接</a></p>
+
 ]]></content>
   </entry>
   
