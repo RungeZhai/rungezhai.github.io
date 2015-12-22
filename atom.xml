@@ -4,7 +4,7 @@
   <title><![CDATA[Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-22T22:13:47+08:00</updated>
+  <updated>2015-12-22T22:20:52+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -19,6 +19,8 @@
     <updated>2015-12-22T21:40:00+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress</id>
     <content type="html"><![CDATA[<p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
+
+<p>_</p>
 
 <p>首先说明, 本文的环境是Mac OSX.</p>
 
