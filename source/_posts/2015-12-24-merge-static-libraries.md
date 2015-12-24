@@ -40,8 +40,6 @@ The following command creates a thin version of the library with supported archi
 lipo -thin ${LIPO_ARCH} ${LIBRARY_NAME} -output ${LIBRARY_NAME}
 ```
 
-<br>
-
 > A flat library is a library that support multiple architectures.
 
 <br>

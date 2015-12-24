@@ -3,7 +3,7 @@ layout: post
 title: "Build My Own Blog Using GitHub Pages and Jekyll"
 date: 2015-12-21 21:50:38 +0800
 comments: true
-categories: 
+categories: Octopress
 ---
 
 {% raw %}
@@ -28,42 +28,43 @@ https://github.com/RungeZhai/blog.git
 
 在本机新建文件夹并进入该文件夹
 
-```bash
+``` bash
 mkdir blog
 cd blog
 ```
 
 初始化 git 并关联上面新建的 Repository
 
-```bash
+``` bash
 git init
 git remote add origin https://github.com/RungeZhai/blog.git
 ```
 
 新建 gh-pages 分支, 因为 GitHub 规定, 只有该分支中的页面, 才会自动生成网页文件
 
-```bash
+``` bash
 git checkout --orphan branch gh-pages
 ```
 
 新建一个 index.html 文件, 并输入内容
 
-```html
+```
 <!DOCTYPE html>
 <html lang=“en-ca”>
 <head>
 <meta charset=“utf-8”>
-<title>Hello, World!</title>
+<title> Hello, World! </title>
 </head>
 <body>
 <h1>H1</h1>
 </body>
 </html>
+
 ```
 
 提交修改
 
-```bash
+```
 git add .
 git commit -m 'add index.html'
 git push -u origin gh-pages
@@ -183,7 +184,7 @@ title: 我的Blog
 
 上面已经提到了, 其实就是提交
 
-```bash
+``` bash
 git add .
 git commit -m 'Init Jekyll'
 git push -u origin gh-pages
@@ -195,13 +196,13 @@ git push -u origin gh-pages
 
 为了本机立即查看效果, 我们需要在本机安装Jekyll. 为了保证本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 我们直接使用 GitHub 的 Jekyll:
 
-```bash
+``` bash
 sudo gem install github-pages
 ```
 
 然后进入上文的Repository目录, 执行下面的命令:
 
-```bash
+``` bash
 jekyll serve --watch --baseurl ""
 ```
 

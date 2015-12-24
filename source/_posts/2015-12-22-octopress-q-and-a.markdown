@@ -3,7 +3,7 @@ layout: post
 title: "Octopress Q&amp;A"
 date: 2015-12-22 22:36:52 +0800
 comments: true
-categories: 
+categories: Octopress
 ---
 
 
@@ -50,3 +50,5 @@ rdiscount:
     - footnotes
     - smart
 ```
+
+**在主页显示文章分类Category**

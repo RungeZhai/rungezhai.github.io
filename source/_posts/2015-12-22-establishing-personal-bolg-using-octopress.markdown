@@ -3,8 +3,10 @@ layout: post
 title: "Establishing Personal Bolg Using Octopress"
 date: 2015-12-22 21:40:00 +0800
 comments: true
-categories: 
+categories: Octopress
 ---
+
+{% raw %}
 
 本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.
 
@@ -217,19 +219,7 @@ git branch --unset-upstream
 rake new_post["Post Title"]
 ```
 
-`Post Title`是想要新建的文章的标题, 运行上面的命令会在 octopress/source/_posts 目录下新增 yyyy-mm-dd-Post-Title.markdown 文件, 默认是使用的markdown, 如果想直接用html的话, 把拓展名改成html即可, 打开文件会发现文件头大致是这种格式:
-
-```
----  
-layout: post  
-title: "Post Title"  
-date: yyyy-mm-dd hh:mm:ss  
-comments: true  
-categories: ""  
----
-```
-
-不要删除这段信息, 在下面写自己的文章就行了. 写完之后执行上面的`生成页面并部署`和`将结果提交到Github`两步即可.
+`Post Title`是想要新建的文章的标题, 运行上面的命令会在 octopress/source/_posts 目录下新增 yyyy-mm-dd-Post-Title.markdown 文件, 默认是使用的markdown, 如果想直接用html的话, 把拓展名改成html即可, 打开文件会发现文件已经有了几行文字, 这些是文章的metadata, 不要删除这段信息, 在下面写自己的文章就行了. 写完之后执行上面的`生成页面并部署`和`将结果提交到Github`两步即可.
 
 
 参考
@@ -242,3 +232,5 @@ http://linfan.info/blog/2012/02/25/homebrew-installation-and-usage/
 http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/
 http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
 http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll
+
+{% endraw %}
