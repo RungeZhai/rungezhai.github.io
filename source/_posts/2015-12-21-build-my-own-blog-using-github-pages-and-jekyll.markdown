@@ -109,6 +109,7 @@ Jekyll 的目录结构是下面这样的:
 |     |--...
 |
 |-- index.html
+
 ```
 
 ###新建 _config.yml
@@ -139,6 +140,7 @@ baseurl: /blog
 
 </body>
 </html>
+
 ```
 
 Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。
@@ -155,6 +157,7 @@ title: 你好，世界
 <h2>{{ page.title }}</h2>
 <p>我的第一篇文章</p>
 <p>{{ page.date | date_to_string }}</p>
+
 ```
 
 每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线"—", 标记开始和结束, 里面每一行设置一种元数据. "layout: default"，表示该文章的模板使用 _layouts 目录下的 default.html 文件; "title: 你好, 世界”, 表示该文章的标题是"你好, 世界"，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即"hello world"。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, "| date_to_string"表示将 page.date 变量转化成人类可读的格式。
@@ -176,6 +179,7 @@ title: 我的Blog
 　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 　　{% endfor %}
 </ul>
+
 ```
 
 它的Yaml文件头表示, 首页使用default模板, 标题为"我的Blog". 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.

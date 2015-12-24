@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Establishing Personal Bolg Using Octopress"
+title: "Establishing Personal Blog Using Octopress"
 date: 2015-12-22 21:40:00 +0800
 comments: true
 categories: Octopress
@@ -73,22 +73,25 @@ Using bundler 1.10.6
 * 安装
 
 HomeBrew 是一个非常有用的软件包管理系统, 一般情况下, Mac机器已经安装过Brew了. 可以使用`brew --version`查看brew的版本. 如果机器没有安装Brew, 可以运行下面命令安装
+
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
+
 或者想卸载重装, 运行下面命令卸载
+
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
 ```
+
 按照提示一步一步来即可, 期间可能会遇到`Permission denied`什么的, 那么就在命令前面加上`sudo`(super do)再执行一遍喽.
 
 * 诊断Brew
 
-运行`brew doctor`来检查Brew的状况. 
-如果出现如`Unbrewed *** were found`这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
-如果出现`Homebrew's sbin was not found in your PATH but you have installed...`这种提示, 在命令行运行
-`export PATH="/usr/local/sbin:$PATH"`.
-总之, 到最后如果完全没有问题的话, 运行`brew doctor`会出现`Your system is ready to brew.`
+运行 `brew doctor` 来检查Brew的状况. 
+如果出现如 `Unbrewed *** were found` 这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
+如果出现 `Homebrew's sbin was not found in your PATH but you have installed...` 这种提示, 在命令行运行 `export PATH="/usr/local/sbin:$PATH"`.
+总之, 到最后如果完全没有问题的话, 运行 `brew doctor` 会出现 `Your system is ready to brew.`
 
 ###新建Github Repository
 新建一个repository, 命名规则为`[your_username].github.io`. 把其中的`[your_username]`换成你自己在Github 上的用户名, 我这里是rungezhai.github.io. 记下这个repository的链接, https或者SSH都可以, 下面会用到.
@@ -131,6 +134,7 @@ cd rungezhai.github.io
 sudo gem install bundler
 bundle install
 ```
+
 期间可能会出现如下类似错误
 
 ```
@@ -159,6 +163,7 @@ Use `bundle show [gemname]` to see where a bundled gem is installed.
 ```
 rake install
 ```
+
 本地安装完毕. 顺便说一句, 所谓 rake 就是 ruby make 的缩写.
 
 * 预览
@@ -166,6 +171,7 @@ rake install
 ```
 rake preview
 ```
+
 在浏览器中输入:`http://localhost:4000/`即可查看网站, 现在应该是一个黑色背景的空白页面. 命令行中按Ctrl+C结束预览.
 
 
