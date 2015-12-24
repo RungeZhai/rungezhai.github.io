@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Establishing Personal Bolg Using Octopress - Runge Zhai's Blog</title>
+  <title>Establishing Personal Blog Using Octopress - Runge Zhai's Blog</title>
   <meta name="author" content="Runge Zhai">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/">
+  <link rel="canonical" href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Runge Zhai's Blog" type="application/atom+xml">
@@ -58,6 +58,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
 
 </nav>
@@ -68,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">Establishing Personal Bolg Using Octopress</h1>
+      <h1 class="entry-title">Establishing Personal Blog Using Octopress</h1>
     
     
       <p class="meta">
@@ -197,22 +198,25 @@
 </ul>
 
 <p>HomeBrew 是一个非常有用的软件包管理系统, 一般情况下, Mac机器已经安装过Brew了. 可以使用<code>brew --version</code>查看brew的版本. 如果机器没有安装Brew, 可以运行下面命令安装</p>
+
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>或者想卸载重装, 运行下面命令卸载</p>
+
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>按照提示一步一步来即可, 期间可能会遇到<code>Permission denied</code>什么的, 那么就在命令前面加上<code>sudo</code>(super do)再执行一遍喽.</p>
 
 <ul>
   <li>诊断Brew</li>
 </ul>
 
-<p>运行<code>brew doctor</code>来检查Brew的状况. 
-如果出现如<code>Unbrewed *** were found</code>这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
-如果出现<code>Homebrew's sbin was not found in your PATH but you have installed...</code>这种提示, 在命令行运行
-<code>export PATH="/usr/local/sbin:$PATH"</code>.
-总之, 到最后如果完全没有问题的话, 运行<code>brew doctor</code>会出现<code>Your system is ready to brew.</code></p>
+<p>运行 <code>brew doctor</code> 来检查Brew的状况. 
+如果出现如 <code>Unbrewed *** were found</code> 这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
+如果出现 <code>Homebrew's sbin was not found in your PATH but you have installed...</code> 这种提示, 在命令行运行 <code>export PATH="/usr/local/sbin:$PATH"</code>.
+总之, 到最后如果完全没有问题的话, 运行 <code>brew doctor</code> 会出现 <code>Your system is ready to brew.</code></p>
 
 <h3 id="github-repository">新建Github Repository</h3>
 <p>新建一个repository, 命名规则为<code>[your_username].github.io</code>. 把其中的<code>[your_username]</code>换成你自己在Github 上的用户名, 我这里是rungezhai.github.io. 记下这个repository的链接, https或者SSH都可以, 下面会用到.</p>
@@ -257,6 +261,7 @@
 <span class="line-number">2</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">sudo gem install bundler
 </span><span class="line">bundle install</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>期间可能会出现如下类似错误</p>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
@@ -287,6 +292,7 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">rake install</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>本地安装完毕. 顺便说一句, 所谓 rake 就是 ruby make 的缩写.</p>
 
 <ul>
@@ -295,6 +301,7 @@
 
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">rake preview</span></code></pre></td></tr></table></div></figure></notextile></div>
+
 <p>在浏览器中输入:<code>http://localhost:4000/</code>即可查看网站, 现在应该是一个黑色背景的空白页面. 命令行中按Ctrl+C结束预览.</p>
 
 <h3 id="section">发布</h3>
@@ -384,7 +391,7 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
   
 </span>
 
@@ -393,7 +400,7 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/" data-via="" data-counturl="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/" data-via="" data-counturl="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/" >Tweet</a>
   
   
   
@@ -434,7 +441,7 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
       </li>
     
       <li class="post">
-        <a href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/">Establishing Personal Bolg Using Octopress</a>
+        <a href="/blog/2015/12/22/establishing-personal-blog-using-octopress/">Establishing Personal Blog Using Octopress</a>
       </li>
     
       <li class="post">
@@ -443,7 +450,14 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
     
   </ul>
 </section>
-
+<section> 
+  <h1>Categories</h1> 
+  <ul id="categories"> 
+    <li class='category'><a href='/blog/categories/octopress/'>Octopress (3)</a></li>
+<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
+ 
+  </ul> 
+</section>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
@@ -476,10 +490,7 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
 
 
 
-<section>
-  <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/octopress/'>octopress (3)</a></li><li><a href='/blog/categories/xcode/'>xcode (1)</a></li></ul>
-</section>
+
   
 </aside>
 
@@ -499,8 +510,8 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/';
-        var disqus_url = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/';
+        var disqus_identifier = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/';
+        var disqus_url = 'http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/';
         var disqus_script = 'embed.js';
       
     (function () {

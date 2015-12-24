@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-24T16:37:34+08:00</updated>
+  <updated>2015-12-25T00:33:03+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -18,15 +18,17 @@
     <link href="http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a/"/>
     <updated>2015-12-22T22:36:52+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a</id>
-    <content type="html"><![CDATA[<p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置的总结. 会一直持续更新.</p>
+    <content type="html"><![CDATA[<p></p>
+
+<p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置或者开发中遇到的各种问题的总结. 会一直持续更新.</p>
 
 <!--more-->
 
-<p><strong>文章在首页显示摘要</strong></p>
+<h3 id="section">文章在首页显示摘要</h3>
 
 <p>一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入<code>&lt;!--more--&gt;</code>.</p>
 
-<p><strong>Markdown文件拓展名修改</strong></p>
+<h3 id="markdown">Markdown文件拓展名修改</h3>
 
 <p>默认的MarkDown文件名是<code>.markdown</code>. 我们想把它改成<code>.md</code>, 这样更简洁. 方法是修改 <code>rakefile</code> 文件, 将下面两行</p>
 
@@ -42,7 +44,7 @@ new_post_ext    = "md"  # 默认新日志文件后缀
 new_page_ext    = "md"  # 默认新页面文件后缀
 </code></p>
 
-<p><strong>修改默认Markdown解释器</strong></p>
+<h3 id="markdown-1">修改默认Markdown解释器</h3>
 
 <p>默认的Markdown解释器是<code>rdiscount</code>, 可以把它改成GitHub推荐的<code>kramdown</code>. 打开<code>Gemfile</code>, 在最后新增下面一行</p>
 
@@ -54,22 +56,107 @@ gem 'kramdown'
 
 <p>再打开<code>_config.yml</code>, 找到<code>markdown: rdiscount</code>, 将其中的<code>rdiscout</code>改成<code>kramdown</code>. 并将下面的删除或注释掉(yml文件的行注释是前面加<code>#</code>).</p>
 
-<p><code>
+<p>```
 rdiscount:
   extensions:
     - autolink
     - footnotes
-    - smart
-</code></p>
+    - smart</p>
+
+<p>```</p>
+
+<h3 id="section-1">在主页侧边栏显示文章分类</h3>
+
+<ul>
+  <li>在<code>plugins</code>目录下新建<code>category_list_tag.rb</code>文件, 内容如下:</li>
+</ul>
+
+<p>```
+module Jekyll 
+  class CategoryListTag &lt; Liquid::Tag 
+    def render(context) 
+      html = “” 
+      categories = context.registers[:site].categories.keys 
+      categories.sort.each do |category| 
+        posts_in_category = context.registers[:site].categories[category].size 
+        category_dir = context.registers[:site].config[‘category_dir’] 
+        category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, ‘-‘).gsub(/-{2,}/, ‘-‘).downcase) 
+        html « “&lt;li class='category'&gt;<a href="http://rungezhai.github.io/#{category_url}/">#{category} (#{posts_in_category})</a>&lt;/li&gt;\n” 
+      end 
+      html 
+    end 
+  end 
+end</p>
+
+<p>Liquid::Template.register_tag(‘category_list’, Jekyll::CategoryListTag)</p>
+
+<p>```</p>
+
+<ul>
+  <li><code>source/include/custom/asides</code>目录下新建<code>category_list.html</code>文件, 内容如下:</li>
+</ul>
+
+<p>```</p>
+<section>
+  <h1>Categories</h1>
+  <ul id="categories">
+    {% category_list %}
+  </ul>
+</section>
+
+<p>```</p>
+
+<ul>
+  <li>
+    <p>修改<code>_config.yml</code>文件</p>
+
+    <p>找到以<code>default_asides:</code>开头的一行, 添加<code>custom/asides/category_list.html</code>. 
+  到了这里, 重新生成部署已经可以看到结果了, 但仔细看会发现, 分类的名字中的大写字母都被变成了小写, 如果想改成本来的大小写, 参考下一步.</p>
+  </li>
+  <li>
+    <p>修改<code>Jekyll</code>, 取消自动小写分类名称
+  找到<code>Jekyll</code>的源代码目录, 我这里是<code>/Users/liuge/.rvm/gems/ruby-1.9.3-p551/gems/jekyll-2.5.3/lib/jekyll</code> 修改目录下的<code>post.rb</code>文件, 找到如下内容, 删除其中的<code>downcase</code>.</p>
+  </li>
+</ul>
+
+<p>```
+self.categories = self.data.pluralized_array(‘category’, ‘categories’).map {|c| c.to_s.downcase}</p>
+
+<p>```</p>
+
+<blockquote>
+  <p>如果遇到<code>Error:  Pygments can't parse unknown language: &lt;/p&gt;</code>这种问题, 一般是文章中包含HTML代码等非常规文字, 修改<code>plugins/pygments_code.rb</code>文件, 将<code>raise "Pygments can't parse unknown language: #{lang}."</code>替换成<code>raise "Pygments can't parse unknown language: #{lang}#{code}."</code> 然后再执行 <code>rake generate</code> 就可以看到产生问题的位置. 实际使用中, 我发现产生问题的位置都是在文章中贴的HTML代码块或者其他非常规文字的位置, 解决方法是代码结束的”```“(triple-backtick)前后都需要留一个空行. 顺便说一句, Pygments是语法高亮插件.</p>
+</blockquote>
+
+<h3 id="section-2">在文章中显示特殊字符</h3>
+
+<p>有一些字符是Octopress得保留字符, 比如<code>{{, ^ ...</code>等. 若要在文中显示这些字符</p>
+
+<p></p>
+
+<p>需要将包含这些字符的文字放在 <code>{% raw %}</code> 和 <code>{% endraw %}</code>之间.</p>
+
+<p></p>
+
+<p></p>
+
+<p><br /></p>
+
+<p>Reference</p>
+
+<p><a href="http://www.narga.net/improve-octopress-advanced-tweaks-tips/">improve-octopress-advanced-tweaks-tips</a></p>
+
+<p><a href="http://i.rexdf.org/blog/2014/09/26/octopressbo-ke-geng-xin-ri-zhi/">Octopress CDN Config</a></p>
+
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Establishing Personal Bolg Using Octopress]]></title>
-    <link href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/"/>
+    <title type="html"><![CDATA[Establishing Personal Blog Using Octopress]]></title>
+    <link href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress/"/>
     <updated>2015-12-22T21:40:00+08:00</updated>
-    <id>http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress</id>
-    <content type="html"><![CDATA[<p>{% raw %}</p>
+    <id>http://rungezhai.github.io/blog/2015/12/22/establishing-personal-blog-using-octopress</id>
+    <content type="html"><![CDATA[<p></p>
 
 <p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
 
@@ -137,25 +224,28 @@ Using bundler 1.10.6
   <li>安装</li>
 </ul>
 
-<p>HomeBrew 是一个非常有用的软件包管理系统, 一般情况下, Mac机器已经安装过Brew了. 可以使用<code>brew --version</code>查看brew的版本. 如果机器没有安装Brew, 可以运行下面命令安装
-<code>
+<p>HomeBrew 是一个非常有用的软件包管理系统, 一般情况下, Mac机器已经安装过Brew了. 可以使用<code>brew --version</code>查看brew的版本. 如果机器没有安装Brew, 可以运行下面命令安装</p>
+
+<p><code>
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-</code>
-或者想卸载重装, 运行下面命令卸载
-<code>
+</code></p>
+
+<p>或者想卸载重装, 运行下面命令卸载</p>
+
+<p><code>
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-</code>
-按照提示一步一步来即可, 期间可能会遇到<code>Permission denied</code>什么的, 那么就在命令前面加上<code>sudo</code>(super do)再执行一遍喽.</p>
+</code></p>
+
+<p>按照提示一步一步来即可, 期间可能会遇到<code>Permission denied</code>什么的, 那么就在命令前面加上<code>sudo</code>(super do)再执行一遍喽.</p>
 
 <ul>
   <li>诊断Brew</li>
 </ul>
 
-<p>运行<code>brew doctor</code>来检查Brew的状况. 
-如果出现如<code>Unbrewed *** were found</code>这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
-如果出现<code>Homebrew's sbin was not found in your PATH but you have installed...</code>这种提示, 在命令行运行
-<code>export PATH="/usr/local/sbin:$PATH"</code>.
-总之, 到最后如果完全没有问题的话, 运行<code>brew doctor</code>会出现<code>Your system is ready to brew.</code></p>
+<p>运行 <code>brew doctor</code> 来检查Brew的状况. 
+如果出现如 <code>Unbrewed *** were found</code> 这种提示, 可以忽略, 如果实在不放心, 那就按照提示把它们统统删掉(不放心可以删之前先备份).
+如果出现 <code>Homebrew's sbin was not found in your PATH but you have installed...</code> 这种提示, 在命令行运行 <code>export PATH="/usr/local/sbin:$PATH"</code>.
+总之, 到最后如果完全没有问题的话, 运行 <code>brew doctor</code> 会出现 <code>Your system is ready to brew.</code></p>
 
 <h3 id="github-repository">新建Github Repository</h3>
 <p>新建一个repository, 命名规则为<code>[your_username].github.io</code>. 把其中的<code>[your_username]</code>换成你自己在Github 上的用户名, 我这里是rungezhai.github.io. 记下这个repository的链接, https或者SSH都可以, 下面会用到.</p>
@@ -199,8 +289,9 @@ cd rungezhai.github.io
 <p><code>
 sudo gem install bundler
 bundle install
-</code>
-期间可能会出现如下类似错误</p>
+</code></p>
+
+<p>期间可能会出现如下类似错误</p>
 
 <p><code>
 An error occurred while installing tilt (2.0.1), and Bundler
@@ -229,8 +320,9 @@ Use <code>bundle show [gemname]</code> to see where a bundled gem is installed.<
 
 <p><code>
 rake install
-</code>
-本地安装完毕. 顺便说一句, 所谓 rake 就是 ruby make 的缩写.</p>
+</code></p>
+
+<p>本地安装完毕. 顺便说一句, 所谓 rake 就是 ruby make 的缩写.</p>
 
 <ul>
   <li>预览</li>
@@ -238,8 +330,9 @@ rake install
 
 <p><code>
 rake preview
-</code>
-在浏览器中输入:<code>http://localhost:4000/</code>即可查看网站, 现在应该是一个黑色背景的空白页面. 命令行中按Ctrl+C结束预览.</p>
+</code></p>
+
+<p>在浏览器中输入:<code>http://localhost:4000/</code>即可查看网站, 现在应该是一个黑色背景的空白页面. 命令行中按Ctrl+C结束预览.</p>
 
 <h3 id="section">发布</h3>
 
@@ -311,7 +404,7 @@ http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/
 http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
 http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll</p>
 
-<p>{% endraw %}</p>
+<p></p>
 ]]></content>
   </entry>
   
@@ -320,7 +413,7 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
     <link href="http://rungezhai.github.io/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/"/>
     <updated>2015-12-21T21:50:38+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll</id>
-    <content type="html"><![CDATA[<p>{% raw %}</p>
+    <content type="html"><![CDATA[<p></p>
 
 <p>今天终于使用 GitHub Pages 和 Jekyll 搭建起了自己的博客, 本来一直想自己租个服务器用 WordPress 自己搭建一个个人博客网站, 但是一直没有行动, 一拖再拖. 最后发现本末倒置了, 工具不重要, 最主要的是想积累一些自己的东西, 有自己的一点空间, 分享自己的想法, 如果能帮助别人, 那就最好不过了.</p>
 
@@ -362,22 +455,23 @@ git checkout --orphan branch gh-pages
 
 <p>新建一个 index.html 文件, 并输入内容</p>
 
-<p>```html
+<p>```
 &lt;!DOCTYPE html&gt;
 &lt;html lang=“en-ca”&gt;</p>
 <head>
 &lt;meta charset=“utf-8”&gt;
-<title>Hello, World!</title>
+<title> Hello, World! </title>
 </head>
 <body>
 <h1>H1</h1>
 </body>
-<p>&lt;/html&gt;
-```</p>
+<p>&lt;/html&gt;</p>
+
+<p>```</p>
 
 <p>提交修改</p>
 
-<p><code>bash
+<p><code>
 git add .
 git commit -m 'add index.html'
 git push -u origin gh-pages
@@ -387,15 +481,19 @@ git push -u origin gh-pages
 
 <p>```</p>
 <github username="">.github.io/<repository name="">
-```
-
-我这里是rungezhai.github.io/blog. 应该会看到一个空白页, 而不会看到 Hello, World!. 因为上面说了, GitHub 发布需要时间, 只要没报错, 说明到目前为止一切正常. 我等了足足两个小时才看到久违的 Hello, World!.
-
-##增加 Jekyll 所需的文件
-
-Jekyll 的目录结构是下面这样的:
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>我这里是rungezhai.github.io/blog. 应该会看到一个空白页, 而不会看到 Hello, World!. 因为上面说了, GitHub 发布需要时间, 只要没报错, 说明到目前为止一切正常. 我等了足足两个小时才看到久违的 Hello, World!.
+</span><span class='line'>
+</span><span class='line'>##增加 Jekyll 所需的文件
+</span><span class='line'>
+</span><span class='line'>Jekyll 的目录结构是下面这样的:
+</span></code></pre></td></tr></table></div></figure>
 .
 |
 |-- _config.yml
@@ -422,24 +520,31 @@ Jekyll 的目录结构是下面这样的:
 |     |--...
 |
 |-- index.html
-```
 
-###新建 _config.yml
-
-`_config.yml`是 Jekyll 的配置文件, 这里新增如下两行内容
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>###新建 _config.yml
+</span><span class='line'>
+</span><span class='line'>`_config.yml`是 Jekyll 的配置文件, 这里新增如下两行内容
+</span></code></pre></td></tr></table></div></figure>
 markdown: redcarpet
 baseurl: /blog
-```
-
-特别注意格式, 冒号后面要有空格. 第一行, redcarpet 是 GitHub 的 markdown 解析器. 第二行, baseurl 是 上面提到的链接格式处显示的文字, 默认是 repository 的名字.
-
-###_layout
-
-该目录用来存放模板文件, 在该目录下新建 default.html 文件, 内容如下:
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>特别注意格式, 冒号后面要有空格. 第一行, redcarpet 是 GitHub 的 markdown 解析器. 第二行, baseurl 是 上面提到的链接格式处显示的文字, 默认是 repository 的名字.
+</span><span class='line'>
+</span><span class='line'>###_layout
+</span><span class='line'>
+</span><span class='line'>该目录用来存放模板文件, 在该目录下新建 default.html 文件, 内容如下:
+</span></code></pre></td></tr></table></div></figure>
 &lt;!DOCTYPE html&gt;
 <html>
 <head>
@@ -452,15 +557,20 @@ baseurl: /blog
 
 </body>
 </html>
-```
 
-Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。
-
-###创建文章
-
-新建目录_posts, 进入该目录, 创建第一篇文章. 文章就是普通的文本文件, 文件名假定为2012-08-25-hello-world.html. 注意, 文件名必须为"年-月-日-文章标题.后缀名"的格式. 如果网页代码采用 html 格式, 后缀名为 html; 如果采用 markdown 格式, 后缀名为md. 在该文件中输入以下内容
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>Jekyll使用Liquid模板语言，{{ page.title }}表示文章标题，{{ content }}表示文章内容，更多模板变量请参考官方文档。
+</span><span class='line'>
+</span><span class='line'>###创建文章
+</span><span class='line'>
+</span><span class='line'>新建目录_posts, 进入该目录, 创建第一篇文章. 文章就是普通的文本文件, 文件名假定为2012-08-25-hello-world.html. 注意, 文件名必须为"年-月-日-文章标题.后缀名"的格式. 如果网页代码采用 html 格式, 后缀名为 html; 如果采用 markdown 格式, 后缀名为md. 在该文件中输入以下内容
+</span></code></pre></td></tr></table></div></figure>
 ---
 layout: default
 title: 你好，世界
@@ -468,15 +578,20 @@ title: 你好，世界
 <h2>{{ page.title }}</h2>
 <p>我的第一篇文章</p>
 <p>{{ page.date | date_to_string }}</p>
-```
 
-每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线"—", 标记开始和结束, 里面每一行设置一种元数据. "layout: default"，表示该文章的模板使用 _layouts 目录下的 default.html 文件; "title: 你好, 世界”, 表示该文章的标题是"你好, 世界"，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即"hello world"。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, "| date_to_string"表示将 page.date 变量转化成人类可读的格式。
-
-###首页
-
-首页就是我们上面新建的 index.html, 现在把它修改成如下:
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>每篇文章的头部, 必须有一个 yaml 文件头, 用来设置一些元数据. 它用三根短划线"—", 标记开始和结束, 里面每一行设置一种元数据. "layout: default"，表示该文章的模板使用 _layouts 目录下的 default.html 文件; "title: 你好, 世界”, 表示该文章的标题是"你好, 世界"，如果不设置这个值, 默认使用嵌入文件名(2012-08-25-hello-world.html)的标题, 即"hello world"。 在 yaml 文件头后面, 就是文章的正式内容, 里面可以使用模板变量. {{ page.title }}就是文件头中设置的"你好，世界"，{{ page.date }}则是嵌入文件名的日期（也可以在文件头重新定义 date 变量）, "| date_to_string"表示将 page.date 变量转化成人类可读的格式。
+</span><span class='line'>
+</span><span class='line'>###首页
+</span><span class='line'>
+</span><span class='line'>首页就是我们上面新建的 index.html, 现在把它修改成如下:
+</span></code></pre></td></tr></table></div></figure>
 ---
 layout: default
 title: 我的Blog
@@ -489,39 +604,48 @@ title: 我的Blog
 　　　　<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
 　　{% endfor %}
 </ul>
-```
 
-它的Yaml文件头表示, 首页使用default模板, 标题为"我的Blog". 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.
-
-###发布
-
-上面已经提到了, 其实就是提交
-
-```bash
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>它的Yaml文件头表示, 首页使用default模板, 标题为"我的Blog". 然后，首页使用了{% for post in site.posts %}, 表示对所有帖子进行一个遍历. 这里要注意的是, Liquid模板语言规定, 输出内容使用两层大括号, 单纯的命令使用一层大括号. 至于{{site.baseurl}}就是_config.yml中设置的baseurl变量.
+</span><span class='line'>
+</span><span class='line'>###发布
+</span><span class='line'>
+</span><span class='line'>上面已经提到了, 其实就是提交
+</span></code></pre></td></tr></table></div></figure> bash
 git add .
 git commit -m 'Init Jekyll'
 git push -u origin gh-pages
-```
-
-然后在浏览器里输入上面提到的链接, 就可以看到自己的博客了!!! 呃… 还是"Hello, World!“? 可能需要时间, 耐心等几分钟.
-
-##安装 Jekyll
-
-为了本机立即查看效果, 我们需要在本机安装Jekyll. 为了保证本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 我们直接使用 GitHub 的 Jekyll:
-
-```bash
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>然后在浏览器里输入上面提到的链接, 就可以看到自己的博客了!!! 呃… 还是"Hello, World!“? 可能需要时间, 耐心等几分钟.
+</span><span class='line'>
+</span><span class='line'>##安装 Jekyll
+</span><span class='line'>
+</span><span class='line'>为了本机立即查看效果, 我们需要在本机安装Jekyll. 为了保证本机的 Jekyll 和 GitHub Pages 使用的 Jekyll 是同一个版本, 我们直接使用 GitHub 的 Jekyll:
+</span></code></pre></td></tr></table></div></figure> bash
 sudo gem install github-pages
-```
-
-然后进入上文的Repository目录, 执行下面的命令:
-
-```bash
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>然后进入上文的Repository目录, 执行下面的命令:
+</span></code></pre></td></tr></table></div></figure> bash
 jekyll serve --watch --baseurl ""
-```
-
-应该会看到类似下面的提示:
-
-```
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>应该会看到类似下面的提示:
+</span></code></pre></td></tr></table></div></figure>
 Configuration file: .../blog/_config.yml
 Source: .../blog
 Destination: .../blog/_site
@@ -537,7 +661,7 @@ Server running... press ctrl-c to stop.
 
 注: 文中部分内容抄袭的阮一峰大神的, [附上链接](http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html)
 
-{% endraw %}
+
 </repository></github>
 ]]></content>
   </entry>

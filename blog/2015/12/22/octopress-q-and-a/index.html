@@ -9,7 +9,7 @@
   <meta name="author" content="Runge Zhai">
 
   
-  <meta name="description" content="关于Octopress的配置在这个博客中有详细的教程, 这里我只是做一些很必要的配置的总结. 会一直持续更新. 文章在首页显示摘要 一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入&lt;!--more--&gt;. &hellip;">
+  <meta name="description" content="关于Octopress的配置在这个博客中有详细的教程, 这里我只是做一些很必要的配置或者开发中遇到的各种问题的总结. 会一直持续更新. 文章在首页显示摘要 一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入&lt;!--more--& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -58,6 +58,7 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
 
 </nav>
@@ -84,15 +85,16 @@
   </header>
 
 
-<div class="entry-content"><p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置的总结. 会一直持续更新.</p>
+<div class="entry-content">
+<p>关于Octopress的配置在<a href="http://shengmingzhiqing.com/">这个博客</a>中有详细的教程, 这里我只是做一些很必要的配置或者开发中遇到的各种问题的总结. 会一直持续更新.</p>
 
 <!--more-->
 
-<p><strong>文章在首页显示摘要</strong></p>
+<h3 id="section">文章在首页显示摘要</h3>
 
 <p>一般情况下我们想让文章在主页只显示摘要, 而不是全部显示, 这种情况下, 我们只需要在文章开头的摘要后面空行加入<code>&lt;!--more--&gt;</code>.</p>
 
-<p><strong>Markdown文件拓展名修改</strong></p>
+<h3 id="markdown">Markdown文件拓展名修改</h3>
 
 <p>默认的MarkDown文件名是<code>.markdown</code>. 我们想把它改成<code>.md</code>, 这样更简洁. 方法是修改 <code>rakefile</code> 文件, 将下面两行</p>
 
@@ -108,7 +110,7 @@
 </pre></td><td class="code"><pre><code class=""><span class="line">new_post_ext    = "md"  # 默认新日志文件后缀
 </span><span class="line">new_page_ext    = "md"  # 默认新页面文件后缀</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><strong>修改默认Markdown解释器</strong></p>
+<h3 id="markdown-1">修改默认Markdown解释器</h3>
 
 <p>默认的Markdown解释器是<code>rdiscount</code>, 可以把它改成GitHub推荐的<code>kramdown</code>. 打开<code>Gemfile</code>, 在最后新增下面一行</p>
 
@@ -128,7 +130,104 @@
 </span><span class="line">  extensions:
 </span><span class="line">    - autolink
 </span><span class="line">    - footnotes
-</span><span class="line">    - smart</span></code></pre></td></tr></table></div></figure></notextile></div>
+</span><span class="line">    - smart
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h3 id="section-1">在主页侧边栏显示文章分类</h3>
+
+<ul>
+  <li>在<code>plugins</code>目录下新建<code>category_list_tag.rb</code>文件, 内容如下:</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">module Jekyll 
+</span><span class="line">  class CategoryListTag &lt; Liquid::Tag 
+</span><span class="line">    def render(context) 
+</span><span class="line">      html = "" 
+</span><span class="line">      categories = context.registers[:site].categories.keys 
+</span><span class="line">      categories.sort.each do |category| 
+</span><span class="line">        posts_in_category = context.registers[:site].categories[category].size 
+</span><span class="line">        category_dir = context.registers[:site].config['category_dir'] 
+</span><span class="line">        category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase) 
+</span><span class="line">        html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n" 
+</span><span class="line">      end 
+</span><span class="line">      html 
+</span><span class="line">    end 
+</span><span class="line">  end 
+</span><span class="line">end
+</span><span class="line">	
+</span><span class="line">Liquid::Template.register_tag('category_list', Jekyll::CategoryListTag)
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li><code>source/include/custom/asides</code>目录下新建<code>category_list.html</code>文件, 内容如下:</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">&lt;section&gt;
+</span><span class="line">  &lt;h1&gt;Categories&lt;/h1&gt;
+</span><span class="line">  &lt;ul id="categories"&gt;
+</span><span class="line">    {% category_list %}
+</span><span class="line">  &lt;/ul&gt;
+</span><span class="line">&lt;/section&gt;
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<ul>
+  <li>
+    <p>修改<code>_config.yml</code>文件</p>
+
+    <p>找到以<code>default_asides:</code>开头的一行, 添加<code>custom/asides/category_list.html</code>. 
+  到了这里, 重新生成部署已经可以看到结果了, 但仔细看会发现, 分类的名字中的大写字母都被变成了小写, 如果想改成本来的大小写, 参考下一步.</p>
+  </li>
+  <li>
+    <p>修改<code>Jekyll</code>, 取消自动小写分类名称
+  找到<code>Jekyll</code>的源代码目录, 我这里是<code>/Users/liuge/.rvm/gems/ruby-1.9.3-p551/gems/jekyll-2.5.3/lib/jekyll</code> 修改目录下的<code>post.rb</code>文件, 找到如下内容, 删除其中的<code>downcase</code>.</p>
+  </li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class=""><span class="line">self.categories = self.data.pluralized_array('category', 'categories').map {|c| c.to_s.downcase}
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<blockquote>
+  <p>如果遇到<code>Error:  Pygments can't parse unknown language: &lt;/p&gt;</code>这种问题, 一般是文章中包含HTML代码等非常规文字, 修改<code>plugins/pygments_code.rb</code>文件, 将<code>raise "Pygments can't parse unknown language: #{lang}."</code>替换成<code>raise "Pygments can't parse unknown language: #{lang}#{code}."</code> 然后再执行 <code>rake generate</code> 就可以看到产生问题的位置. 实际使用中, 我发现产生问题的位置都是在文章中贴的HTML代码块或者其他非常规文字的位置, 解决方法是代码结束的”```“(triple-backtick)前后都需要留一个空行. 顺便说一句, Pygments是语法高亮插件.</p>
+</blockquote>
+
+<h3 id="section-2">在文章中显示特殊字符</h3>
+
+<p>有一些字符是Octopress得保留字符, 比如<code>{{, ^ ...</code>等. 若要在文中显示这些字符</p>
+
+<p>需要将包含这些字符的文字放在 <code>{% raw %}</code> 和 <code>{% endraw %}</code>之间.</p>
+
+<p><br /></p>
+
+<p>Reference</p>
+
+<p><a href="http://www.narga.net/improve-octopress-advanced-tweaks-tips/">improve-octopress-advanced-tweaks-tips</a></p>
+
+<p><a href="http://i.rexdf.org/blog/2014/09/26/octopressbo-ke-geng-xin-ri-zhi/">Octopress CDN Config</a></p>
+
 </div>
 
 
@@ -149,7 +248,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+    <a class='category' href='/blog/categories/octopress/'>Octopress</a>
   
 </span>
 
@@ -167,7 +266,7 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/" title="Previous Post: Establishing Personal Bolg Using Octopress">&laquo; Establishing Personal Bolg Using Octopress</a>
+        <a class="basic-alignment left" href="/blog/2015/12/22/establishing-personal-blog-using-octopress/" title="Previous Post: Establishing Personal Blog Using Octopress">&laquo; Establishing Personal Blog Using Octopress</a>
       
       
         <a class="basic-alignment right" href="/blog/2015/12/24/merge-static-libraries/" title="Next Post: Merge Static Libraries">Merge Static Libraries &raquo;</a>
@@ -199,7 +298,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/">Establishing Personal Bolg Using Octopress</a>
+        <a href="/blog/2015/12/22/establishing-personal-blog-using-octopress/">Establishing Personal Blog Using Octopress</a>
       </li>
     
       <li class="post">
@@ -208,7 +307,14 @@
     
   </ul>
 </section>
-
+<section> 
+  <h1>Categories</h1> 
+  <ul id="categories"> 
+    <li class='category'><a href='/blog/categories/octopress/'>Octopress (3)</a></li>
+<li class='category'><a href='/blog/categories/xcode/'>Xcode (1)</a></li>
+ 
+  </ul> 
+</section>
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
@@ -241,10 +347,7 @@
 
 
 
-<section>
-  <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/octopress/'>octopress (3)</a></li><li><a href='/blog/categories/xcode/'>xcode (1)</a></li></ul>
-</section>
+
   
 </aside>
 
