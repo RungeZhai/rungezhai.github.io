@@ -4,7 +4,7 @@
   <title><![CDATA[Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-24T15:59:37+08:00</updated>
+  <updated>2015-12-24T16:36:28+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -127,7 +127,8 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
     <link href="http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress/"/>
     <updated>2015-12-22T21:40:00+08:00</updated>
     <id>http://rungezhai.github.io/blog/2015/12/22/establishing-personal-bolg-using-octopress</id>
-    <content type="html"><![CDATA[<p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
+    <content type="html"><![CDATA[
+<p>本来是想直接用Jekyll进行个人博客搭建的, 但是搭建完以后发现, 生成的页面太原始了, 对于markdown的代码高亮基本就没有, 只是和其他文字字体不一样, 一点都不明显. 况且我对于Web开发并不熟, 自己调整页面布局什么的又是无底洞了. 所以虽然配置过程很痛苦, 最后还是转向了Octopress.</p>
 
 <!--More-->
 
@@ -393,24 +394,7 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 <div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 </pre></td><td class="code"><pre><code class=""><span class="line">rake new_post["Post Title"]</span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p><code>Post Title</code>是想要新建的文章的标题, 运行上面的命令会在 octopress/source/_posts 目录下新增 yyyy-mm-dd-Post-Title.markdown 文件, 默认是使用的markdown, 如果想直接用html的话, 把拓展名改成html即可, 打开文件会发现文件头大致是这种格式:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-</pre></td><td class="code"><pre><code class=""><span class="line">---  
-</span><span class="line">layout: post  
-</span><span class="line">title: "Post Title"  
-</span><span class="line">date: yyyy-mm-dd hh:mm:ss  
-</span><span class="line">comments: true  
-</span><span class="line">categories: ""  
-</span><span class="line">---</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<p>不要删除这段信息, 在下面写自己的文章就行了. 写完之后执行上面的<code>生成页面并部署</code>和<code>将结果提交到Github</code>两步即可.</p>
+<p><code>Post Title</code>是想要新建的文章的标题, 运行上面的命令会在 octopress/source/_posts 目录下新增 yyyy-mm-dd-Post-Title.markdown 文件, 默认是使用的markdown, 如果想直接用html的话, 把拓展名改成html即可, 打开文件会发现文件已经有了几行文字, 这些是文章的metadata, 不要删除这段信息, 在下面写自己的文章就行了. 写完之后执行上面的<code>生成页面并部署</code>和<code>将结果提交到Github</code>两步即可.</p>
 
 <p>参考</p>
 
@@ -422,6 +406,7 @@ http://linfan.info/blog/2012/02/25/homebrew-installation-and-usage/
 http://anandmanisankar.com/posts/set-up-blog-jekyll-github-pages/
 http://www.ruanyifeng.com/blog/2012/08/blogging_with_jekyll.html
 http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-a-markdown-code-block-in-jekyll</p>
+
 ]]></content>
   </entry>
   
@@ -471,28 +456,6 @@ http://stackoverflow.com/questions/24102498/escaping-double-curly-braces-inside-
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>新建一个 index.html 文件, 并输入内容</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-</pre></td><td class="code"><pre><code class="html"><span class="line"><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span><span class="line"><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">“en-ca”</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;head&gt;</span>
-</span><span class="line"><span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">“utf-8”</span><span class="nt">&gt;</span>
-</span><span class="line"><span class="nt">&lt;title&gt;</span>Hello, World!<span class="nt">&lt;/title&gt;</span>
-</span><span class="line"><span class="nt">&lt;/head&gt;</span>
-</span><span class="line"><span class="nt">&lt;body&gt;</span>
-</span><span class="line"><span class="nt">&lt;h1&gt;</span>H1<span class="nt">&lt;/h1&gt;</span>
-</span><span class="line"><span class="nt">&lt;/body&gt;</span>
-</span><span class="line"><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 <p>提交修改</p>
 
