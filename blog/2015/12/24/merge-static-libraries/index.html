@@ -101,7 +101,9 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 </pre></td><td class="code"><pre><code class="bash"><span class="line">libtool -static -o <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/AllInOne.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/A.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/B.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/C.a
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>As of <code>Minimum Modification</code>, the only one is accessing bundle resources. Previously we get bundle from <code>MainBundle</code>, but now we have to get the merged bundle first and then get the bundle we want in the merged bundle, which, I think, is qualified as <code>Minimum Modification</code>.</p>
+<blockquote>
+  <p>As of <code>Minimum Modification</code>, the only one is accessing bundle resources. Previously we get bundle from <code>MainBundle</code>, but now we have to get the merged bundle first and then get the bundle we want in the merged bundle, which, I think, is qualified as <code>Minimum Modification</code>.</p>
+</blockquote>
 
 <h2 id="what-i-learned">What I Learned</h2>
 
@@ -125,9 +127,11 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 
 <p><br /></p>
 
-<p>Reference
-<a href="http://stackoverflow.com/questions/9531014/linking-2-static-libs-into-1-for-ios/21225126#21225126">Linking 2 static libs into 1 for iOS</a>
-<a href="http://www.theconsultant.net/2005/09/macosx-operating-on-fat-files/">MacOSX: Trimming fat from Mach-O fat files</a></p>
+<p>Reference</p>
+
+<p><a href="http://stackoverflow.com/questions/9531014/linking-2-static-libs-into-1-for-ios/21225126#21225126">Linking 2 static libs into 1 for iOS</a></p>
+
+<p><a href="http://www.theconsultant.net/2005/09/macosx-operating-on-fat-files/">MacOSX: Trimming fat from Mach-O fat files</a></p>
 </div>
 
 
@@ -183,29 +187,7 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 
 <aside class="sidebar">
   
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/12/24/merge-static-libraries/">Merge Static Libraries</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/22/octopress-q-and-a/">Octopress Q&amp;A</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/">Establishing Personal Bolg Using Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/">Build My Own Blog Using GitHub Pages and Jekyll</a>
-      </li>
-    
-  </ul>
-</section>
-
+    Included file 'asides/category_list.html' not found in _includes directoryIncluded file 'recent_posts.html' not found in _includes directory
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">

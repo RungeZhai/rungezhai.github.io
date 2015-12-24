@@ -4,7 +4,7 @@
   <title><![CDATA[Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-24T15:38:19+08:00</updated>
+  <updated>2015-12-24T15:48:33+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -35,7 +35,9 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 </pre></td><td class="code"><pre><code class="bash"><span class="line">libtool -static -o <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/AllInOne.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/A.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/B.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/C.a
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
-<p>As of <code>Minimum Modification</code>, the only one is accessing bundle resources. Previously we get bundle from <code>MainBundle</code>, but now we have to get the merged bundle first and then get the bundle we want in the merged bundle, which, I think, is qualified as <code>Minimum Modification</code>.</p>
+<blockquote>
+  <p>As of <code>Minimum Modification</code>, the only one is accessing bundle resources. Previously we get bundle from <code>MainBundle</code>, but now we have to get the merged bundle first and then get the bundle we want in the merged bundle, which, I think, is qualified as <code>Minimum Modification</code>.</p>
+</blockquote>
 
 <h2 id="what-i-learned">What I Learned</h2>
 
@@ -59,9 +61,11 @@ Add the following line to <code>Build Phases -&gt; Click "+" button on the tople
 
 <p><br /></p>
 
-<p>Reference
-<a href="http://stackoverflow.com/questions/9531014/linking-2-static-libs-into-1-for-ios/21225126#21225126">Linking 2 static libs into 1 for iOS</a>
-<a href="http://www.theconsultant.net/2005/09/macosx-operating-on-fat-files/">MacOSX: Trimming fat from Mach-O fat files</a></p>
+<p>Reference</p>
+
+<p><a href="http://stackoverflow.com/questions/9531014/linking-2-static-libs-into-1-for-ios/21225126#21225126">Linking 2 static libs into 1 for iOS</a></p>
+
+<p><a href="http://www.theconsultant.net/2005/09/macosx-operating-on-fat-files/">MacOSX: Trimming fat from Mach-O fat files</a></p>
 ]]></content>
   </entry>
   
