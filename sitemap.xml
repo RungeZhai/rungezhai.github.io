@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/</loc>
+    <lastmod>2015-12-24T15:29:24+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://rungezhai.github.io/blog/2015/12/22/octopress-q-and-a/</loc>
     <lastmod>2015-12-22T22:36:52+08:00</lastmod>
   </url>
@@ -20,5 +24,8 @@
   </url>
   <url>
     <loc>http://rungezhai.github.io/blog/categories/</loc>
+  </url>
+  <url>
+    <loc>http://rungezhai.github.io/blog/categories/xcode/</loc>
   </url>
 </urlset>

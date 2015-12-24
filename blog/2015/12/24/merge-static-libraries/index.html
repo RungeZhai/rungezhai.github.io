@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Merge Static Libraries - Runge Zhai's Blog</title>
+  <meta name="author" content="Runge Zhai">
+
+  
+  <meta name="description" content="Yesterday I was asked to merge multiple Libraries into one. This is a whole new area! Here is the background: Members of our department are &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Runge Zhai's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Runge Zhai's Blog</a></h1>
+  
+    <h2>I Came, I Coded, I Crashed  |  苟不记之笔墨, 未免有辜彼苍之厚</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="rungezhai.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Merge Static Libraries</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-24T15:29:24+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:29 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Yesterday I was asked to merge multiple Libraries into one. This is a whole new area! Here is the background: Members of our department are developing three submodules of the main iOS application, and each submodule is a subproject of main application and output a <code>.a</code> static library file and a <code>.bundle</code> resource file. And now the head of our team wants to merge all the libraries into one and only expose this only one <code>.a</code> and <code>.bundle</code> file to the main application. <strong><code>"And with minimum modification"</code></strong>, said my boss.</p>
+
+<!--more-->
+
+<h2 id="what-i-did">What I Did</h2>
+
+<p>So I created a new project and make the current three subproject as subprojects of the new project. The new project has two target a <code>.a</code> library and  <code>.bundle</code> resource. Both targets’ output are output of the merging of the three submodule accordingly.</p>
+
+<p>The bundle file is just something like a folder, so merging is simply copying three folder into another. As of Xcode, go to <code>Build Phases -&gt; Copy Bundle Resources</code> and add subproject’s .bundle target.</p>
+
+<p>The merging of <code>.a</code> file are simple too, it’s only that I have never touched this area before.
+Add the following line to <code>Build Phases -&gt; Click "+" button on the topleft -&gt; New Run Script Phase</code> (Say we want merge <code>A.a</code>, <code>B.a</code>, <code>C.a</code> into <code>AllInOne.a</code>)</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">libtool -static -o <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/AllInOne.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/A.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/B.a <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/C.a
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<h2 id="what-i-learned">What I Learned</h2>
+
+<p>The solution above is not rigorous. One of the libraries might not support architectures that others do, so the might-not-supported architectures portion of the libraries should not be merged. The following command can figure out the architectures for which the library is being built:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line"><span class="nv">LIPO_ARCH</span><span class="o">=</span><span class="k">$(</span>lipo -info <span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span>/<span class="k">${</span><span class="nv">EXECUTABLE_NAME</span><span class="k">}</span> <span class="p">|</span> awk <span class="s1">&#39;END{ print $NF }&#39;</span><span class="k">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p>The following command creates a thin version of the library with supported architectures in <code>LIPO_ARCH</code>:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">lipo -thin <span class="k">${</span><span class="nv">LIPO_ARCH</span><span class="k">}</span> <span class="k">${</span><span class="nv">LIBRARY_NAME</span><span class="k">}</span> -output <span class="k">${</span><span class="nv">LIBRARY_NAME</span><span class="k">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+<p><br />
+&gt; A flat library is a library that support multiple architectures.</p>
+
+<p><br />
+Reference
+<a href="http://stackoverflow.com/questions/9531014/linking-2-static-libs-into-1-for-ios/21225126#21225126">Linking 2 static libs into 1 for iOS</a></p>
+
+<p><a href="http://www.theconsultant.net/2005/09/macosx-operating-on-fat-files/">MacOSX: Trimming fat from Mach-O fat files</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Runge Zhai</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-12-24T15:29:24+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:29 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/xcode/'>xcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/" data-via="" data-counturl="http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/12/22/octopress-q-and-a/" title="Previous Post: Octopress Q&amp;A">&laquo; Octopress Q&amp;A</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/12/24/merge-static-libraries/">Merge Static Libraries</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/22/octopress-q-and-a/">Octopress Q&amp;A</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/22/establishing-personal-bolg-using-octopress/">Establishing Personal Bolg Using Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/12/21/build-my-own-blog-using-github-pages-and-jekyll/">Build My Own Blog Using GitHub Pages and Jekyll</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/RungeZhai">@RungeZhai</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'RungeZhai',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Runge Zhai -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'rungezhaigithubblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/';
+        var disqus_url = 'http://rungezhai.github.io/blog/2015/12/24/merge-static-libraries/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
