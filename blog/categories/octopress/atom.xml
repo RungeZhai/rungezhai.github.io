@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Runge Zhai's Blog]]></title>
   <link href="http://rungezhai.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://rungezhai.github.io/"/>
-  <updated>2015-12-25T00:33:03+08:00</updated>
+  <updated>2015-12-25T17:47:50+08:00</updated>
   <id>http://rungezhai.github.io/</id>
   <author>
     <name><![CDATA[Runge Zhai]]></name>
@@ -114,8 +114,9 @@ end</p>
   到了这里, 重新生成部署已经可以看到结果了, 但仔细看会发现, 分类的名字中的大写字母都被变成了小写, 如果想改成本来的大小写, 参考下一步.</p>
   </li>
   <li>
-    <p>修改<code>Jekyll</code>, 取消自动小写分类名称
-  找到<code>Jekyll</code>的源代码目录, 我这里是<code>/Users/liuge/.rvm/gems/ruby-1.9.3-p551/gems/jekyll-2.5.3/lib/jekyll</code> 修改目录下的<code>post.rb</code>文件, 找到如下内容, 删除其中的<code>downcase</code>.</p>
+    <p>修改<code>Jekyll</code>, 取消自动小写分类名称</p>
+
+    <p>找到<code>Jekyll</code>的源代码目录, 我这里是<code>/Users/liuge/.rvm/gems/ruby-1.9.3-p551/gems/jekyll-2.5.3/lib/jekyll</code> 修改目录下的<code>post.rb</code>文件, 找到如下内容, 删除其中的<code>downcase</code>.</p>
   </li>
 </ul>
 
@@ -125,20 +126,118 @@ self.categories = self.data.pluralized_array(‘category’, ‘categories’).m
 <p>```</p>
 
 <blockquote>
-  <p>如果遇到<code>Error:  Pygments can't parse unknown language: &lt;/p&gt;</code>这种问题, 一般是文章中包含HTML代码等非常规文字, 修改<code>plugins/pygments_code.rb</code>文件, 将<code>raise "Pygments can't parse unknown language: #{lang}."</code>替换成<code>raise "Pygments can't parse unknown language: #{lang}#{code}."</code> 然后再执行 <code>rake generate</code> 就可以看到产生问题的位置. 实际使用中, 我发现产生问题的位置都是在文章中贴的HTML代码块或者其他非常规文字的位置, 解决方法是代码结束的”```“(triple-backtick)前后都需要留一个空行. 顺便说一句, Pygments是语法高亮插件.</p>
+  <p>如果遇到<code>Error:  Pygments can't parse unknown language: &lt;/p&gt;</code>这种问题, 一般是文章中包含HTML代码等非常规文字, 修改<code>plugins/pygments_code.rb</code>文件, 将<code>raise "Pygments can't parse unknown language: #{lang}."</code>替换成<code>raise "Pygments can't parse unknown language: #{lang}#{code}."</code> 然后再执行 <code>rake generate</code> 就可以看到产生问题的位置. 实际使用中, 我发现产生问题的位置都是在文章中贴的HTML代码块或者其他非常规文字的位置, 解决方法是代码块结束的<code>```</code><sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup>(triple-backtick)前后都需要留一个空行. 顺便说一句, Pygments是语法高亮插件.</p>
 </blockquote>
 
 <h3 id="section-2">在文章中显示特殊字符</h3>
 
-<p>有一些字符是Octopress得保留字符, 比如<code>{{, ^ ...</code>等. 若要在文中显示这些字符</p>
+<p>有一些字符是Octopress的保留字符, 比如<code>{{, ^ ...</code>等. 若在文章中直接输入这些字符, 文章生成可能会报错或者显示一些意想不到的内容.</p>
 
 <p></p>
 
-<p>需要将包含这些字符的文字放在 <code>{% raw %}</code> 和 <code>{% endraw %}</code>之间.</p>
+<p>若要在文中显示这些字符, 需要将包含这些字符的文字放在<code>{% raw %}</code> 和 <code>{% endraw %}</code>之间.</p>
 
 <p></p>
 
+<h3 id="octopress--">已有Octopress在新机器上的配置 / 多终端并行写作</h3>
+
+<p>如果已经有了自己的 Octopress, 如何在一台新机器上将文章同步到本地并配置环境. 就算只有一个人来维护Blog, 有时候也难免会遇到换电脑什么的情况, 怎么办.</p>
+
+<p>首先, 科普, Blog 的 Repository有两个分支, <code>master</code>和<code>source</code>, master 是存储的 Blog 网站本身, 而source是Blog的源文件. master的内容存储在根目录下的<code>_deploy</code>目录下, 当我们执行<code>rake deploy</code>, 其中就包含 push 到 master 操作, 当我们随后 push source 分支时, <code>_deploy</code>目录会被忽略, 详细内容可以查看<code>source</code>分支的<code>.gitignore</code>文件.</p>
+
+<ul>
+  <li>将 Blog clone 到本地</li>
+</ul>
+
+<p>将 source 分支 clone 到本地目录 (下面是octopress)</p>
+
+<p><code>
+git clone -b source git@github.com:username/username.github.com.git octopress 
+</code></p>
+
+<p>将 master 分支 clone 到 上面 octopress目录下的 _deploy 目录下</p>
+
+<p><code>
+cd octopress  
+git clone git@github.com:username/username.github.com.git _deploy  
+</code></p>
+
+<ul>
+  <li>配置环境</li>
+</ul>
+
 <p></p>
+
+<p>包括安装ruby和各种依赖项, 参考<a href="/blog/2015/12/22/establishing-personal-blog-using-octopress/">这里</a>, 不再需要执行<code>rake install</code>安装主题.</p>
+
+<p></p>
+
+<ul>
+  <li>更新</li>
+</ul>
+
+<p>如果在其他地方更新过文章, 那么在本地需要 pull 一下最新的提交. 由于 master 是 Octopress自动更新的, 所以我们只需要更新 source 分支.</p>
+
+<p><code>
+git pull origin source  # update the local source branch
+</code></p>
+
+<h3 id="section-3">站内文章链接</h3>
+
+<p>如果想在文章中引用自己的其他文章, 可以使用下面的格式, 其中<code>2010-07-21-name-of-post</code>是要引用的markdown或者html文件的文件名:</p>
+
+<p><code>
+[Some Link]({% post_url 2010-07-21-name-of-post %})
+</code></p>
+
+<h3 id="about">导航栏新增About</h3>
+
+<p>Octopress有两种类型的文章, 一种叫post, 一种叫page, 概念和WordPress差不多. 如果想在导航栏新增”关于”页, 这是一个page, 不是我们平时发表的post. post源文件存放在source/_posts目录下, 每个page默认对应一个目录, 直接存放在source目录下, Octopress应该是自动查找page目录下的index.md或者index.html.</p>
+
+<ul>
+  <li>新建页面</li>
+</ul>
+
+<p><code>
+rake new_page["about"]
+</code></p>
+
+<p>执行完以后会在source下默认新建一个名为about的目录, 目录下有一个名为<code>index.md</code>的文件. 和post一样, 可以输入自己想写的内容.</p>
+
+<ul>
+  <li>导航栏新建链接指向该page</li>
+</ul>
+
+<p>编辑source/_includes/custom/navigation.html文件, 默认的内容是</p>
+
+<p>```</p>
+<ul class="main-navigation"> 
+  <li><a href="{{ root_url }}/">Blog</a></li> 
+  <li><a href="{{ root_url }}/blog/archives">Archives</a></li> 
+</ul>
+
+<p>```</p>
+
+<p>我们添加一行</p>
+
+<p>```</p>
+<ul class="main-navigation">
+  <li><a href="{{ root_url }}/">Blog</a></li>
+  <li><a href="{{ root_url }}/blog/archives">Archives</a></li>
+  <li><a href="{{ root_url }}/about">About</a></li>
+</ul>
+
+<p>```</p>
+
+<ul>
+  <li>修改字体大小和颜色</li>
+</ul>
+
+<p>字体的样式在sass/base/_typography.scss中设置, 但不建议直接修改该文件. 如果想做修改的话, 修改sass/custom/_styles.scss文件.</p>
+
+<p></p>
+
+<hr />
 
 <p><br /></p>
 
@@ -148,6 +247,16 @@ self.categories = self.data.pluralized_array(‘category’, ‘categories’).m
 
 <p><a href="http://i.rexdf.org/blog/2014/09/26/octopressbo-ke-geng-xin-ri-zhi/">Octopress CDN Config</a></p>
 
+<p><a href="https://daringfireball.net/projects/markdown/syntax">Markdown Syntax</a></p>
+
+<p><a href="ttp://kramdown.gettalong.org/syntax.html">Kramdown Syntax</a></p>
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>关于markdown如何显示<code>```</code>等特殊字符, 以及如何添加脚注(footnotes), 参考<a href="https://daringfireball.net/projects/markdown/syntax">这里</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 ]]></content>
   </entry>
   
